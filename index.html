@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f3a5f">
+<title>Ça repart !</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f7f2ea;--card:#fffdf9;--ink:#1d2733;--soft:#5b6673;--line:#e6dccd;--navy:#1f3a5f;--navy-ink:#fff;--accent:#c4572e;--ok:#e3f1e4;--ok-ink:#1e5b2c;--no:#fbe5df;--no-ink:#8a2f17;--chip:#efe6d8;--bar:#d9cdbb;--sure:#2e7d4a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a21;--card:#1c242e;--ink:#eef1f4;--soft:#a5afba;--line:#2e3a47;--navy:#9cc0ee;--navy-ink:#0f1720;--accent:#ee8a5f;--ok:#1d3a26;--ok-ink:#b9e6c5;--no:#43231b;--no-ink:#ffc6b5;--chip:#26313d;--bar:#34414f;--sure:#5cc184}}
+:root[data-theme="dark"]{--bg:#141a21;--card:#1c242e;--ink:#eef1f4;--soft:#a5afba;--line:#2e3a47;--navy:#9cc0ee;--navy-ink:#0f1720;--accent:#ee8a5f;--ok:#1d3a26;--ok-ink:#b9e6c5;--no:#43231b;--no-ink:#ffc6b5;--chip:#26313d;--bar:#34414f;--sure:#5cc184}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:680px;margin:0 auto;padding:16px 16px 120px}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;line-height:1.2;margin:0 0 8px}
+h1{font-size:26px}h2{font-size:24px}h3{font-size:19px;margin-top:4px}
+.top{display:flex;gap:12px;align-items:center;margin:4px 0 14px}.top img{width:52px;height:52px;border-radius:12px}.top p{margin:0;color:var(--soft);font-size:15px}
+.tabs{display:flex;gap:4px;overflow-x:auto;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;border:0;background:none;color:var(--soft);font:inherit;font-weight:600;padding:10px 6px;border-bottom:3px solid transparent;white-space:nowrap;cursor:pointer}
+.tabs button.on{color:var(--ink);border-color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.hero h2{font-size:26px}
+.note{color:var(--soft);font-size:15px;margin:8px 0 0}
+button{font:inherit;cursor:pointer}
+.big{display:block;width:100%;background:var(--navy);color:var(--navy-ink);border:0;border-radius:12px;padding:14px 18px;font-weight:700;font-size:18px;margin-top:12px}
+.big.alt{background:var(--chip);color:var(--ink)}
+.plain{background:var(--chip);color:var(--ink);border:0;border-radius:10px;padding:10px 14px;font-weight:600}
+.ghost{display:block;width:100%;background:none;border:0;color:var(--soft);padding:12px;margin-top:4px;text-decoration:underline}
+.danger{background:var(--no);color:var(--no-ink);border:0;border-radius:10px;padding:10px 14px;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.actions .big{margin-top:0}
+.sel{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-weight:600;font-size:15px}
+select,textarea,input{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center}
+.stats b{display:block;font-size:24px;font-family:Georgia,serif}.stats span{font-size:13px;color:var(--soft)}
+.how{margin:0;padding-left:20px;color:var(--soft)}.how li{margin:4px 0}
+.list{list-style:none;margin:8px 0 0;padding:0}
+.row{display:flex;width:100%;align-items:center;gap:10px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 0;color:var(--ink)}
+.row span{flex:1;min-width:0}.row b{display:block;font-weight:600}.row small{display:block;color:var(--soft);font-size:14px}.row i{font-style:normal;color:var(--soft);font-size:22px}
+.bar{position:relative;height:6px;background:var(--bar);border-radius:3px;margin-top:6px;overflow:hidden}.bar i,.bar b{position:absolute;left:0;top:0;bottom:0;border-radius:3px}.bar i{background:var(--navy);opacity:.45}.bar b{background:var(--sure)}
+.back{background:none;border:0;color:var(--soft);padding:0 0 10px;font-weight:600}
+.lvl{color:var(--soft);margin:0 0 10px;font-size:15px}
+.rule{background:var(--chip);border-radius:12px;padding:12px 14px;margin:8px 0 12px}
+.ex{list-style:none;padding:0;margin:6px 0 0}.ex li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.ex li span{flex:1;min-width:0}.ex b{display:block;font-weight:600}.ex small{display:block;color:var(--soft);font-size:15px}
+.say{background:var(--chip);border:0;border-radius:50%;width:38px;height:38px;flex:none}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;margin-top:8px;background:var(--bar)}.dot.b1{background:#e0a458}.dot.b2,.dot.b3{background:#8fbf7f}.dot.b4{background:var(--sure)}
+.seg{display:flex;gap:6px}.seg button{flex:1;background:var(--chip);border:2px solid transparent;border-radius:10px;padding:10px;color:var(--ink);font-weight:600}.seg button.on{border-color:var(--navy)}
+.foot{color:var(--soft);font-size:14px;text-align:center}
+.fb{border-radius:12px;padding:12px 14px;margin-top:10px}.fb p{margin:0 0 4px;font-weight:700}.fb b{display:block;font-size:19px}.fb small{display:block;margin-top:4px;opacity:.9;font-size:15px}
+.fb.ok{background:var(--ok);color:var(--ok-ink)}.fb.no{background:var(--no);color:var(--no-ink)}
+/* Runde */
+.rtop{display:flex;align-items:center;gap:12px;margin:4px 0 18px}.rtop span{color:var(--soft);font-size:14px;min-width:42px;text-align:right}
+.x{background:var(--chip);border:0;border-radius:50%;width:36px;height:36px;color:var(--ink)}
+.prog{flex:1;height:8px;background:var(--bar);border-radius:4px;overflow:hidden}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.tag{color:var(--accent);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px}
+.ask{font-size:21px}
+.prompt{font-size:24px;font-family:"Iowan Old Style",Georgia,serif;margin:14px 0}.prompt.gp{font-size:22px}
+.prompt u{text-decoration:none;border-bottom:2px solid var(--accent);display:inline-block;min-width:70px}
+.answer{font-size:22px;font-weight:700;color:var(--navy);margin:8px 0}
+.sayrow{display:flex;gap:8px;margin:8px 0 12px}
+.opts{display:grid;gap:8px;margin-top:10px}
+.opt{text-align:left;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:13px 14px;color:var(--ink);font-size:17px}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt.right{background:var(--ok);border-color:var(--ok-ink);color:var(--ok-ink);font-weight:700}.opt.wrong{background:var(--no);border-color:var(--no-ink);color:var(--no-ink)}.opt.dim{opacity:.5}
+#inp{font-size:20px;margin-top:6px}
+.acc{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.acc button{background:var(--chip);border:0;border-radius:8px;min-width:38px;height:38px;color:var(--ink);font-size:17px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two .big{margin-top:6px}
+.foot-act{margin-top:6px}
+details summary{cursor:pointer;margin-top:8px}
+@media (max-width:420px){.stats{grid-template-columns:repeat(2,1fr)}.prompt{font-size:21px}}
+</style>
+</head>
+<body>
+<div id="app"><p style="color:#888">Lädt …</p></div>
+<script>
+const ICON='icon-192.png';
+// Wortschatz: [französisch, deutsch, Hinweis]
+const AREAS=[
+ {id:'talk',name:'Gespräche mit Locals'},
+ {id:'trip',name:'Ferien & Alltag'},
+ {id:'home',name:'Haus & Handwerker'},
+ {id:'news',name:'Aktuelles & Debatten'}];
+const THEMES=[
+{id:'connaitre',area:'talk',name:'Kennenlernen',items:[
+ ['Vous êtes d’où ?','Woher kommen Sie?'],
+ ['Je viens de Suisse, de Berne.','Ich komme aus der Schweiz, aus Bern.'],
+ ['On a une maison dans le coin.','Wir haben ein Haus in der Gegend.'],
+ ['Ça fait longtemps que vous habitez ici ?','Wohnen Sie schon lange hier?'],
+ ['Vous êtes du coin ?','Sind Sie von hier?'],
+ ['Je suis là pour les vacances.','Ich bin in den Ferien hier.'],
+ ['Qu’est-ce que vous faites dans la vie ?','Was machen Sie beruflich?'],
+ ['Je travaille dans les médias.','Ich arbeite in den Medien.'],
+ ['On se tutoie ?','Wollen wir uns duzen?'],
+ ['Enchanté, moi c’est Fabian.','Freut mich, ich bin Fabian.'],
+ ['Ravi de vous rencontrer.','Schön, Sie kennenzulernen.'],
+ ['Il fait un temps magnifique aujourd’hui.','Heute ist herrliches Wetter.'],
+ ['Il va pleuvoir, d’après la météo.','Laut Wetterbericht wird es regnen.'],
+ ['Quelle chaleur !','Was für eine Hitze!'],
+ ['Vous parlez très bien français.','Sie sprechen sehr gut Französisch.'],
+ ['Je suis un peu rouillé.','Ich bin etwas eingerostet.','rouillé = eingerostet'],
+ ['Mon français n’est plus ce qu’il était.','Mein Französisch ist nicht mehr, was es war.'],
+ ['Je cherche mes mots.','Mir fehlen die Worte.'],
+ ['On se voit demain ?','Sehen wir uns morgen?'],
+ ['Passez nous voir quand vous voulez.','Kommen Sie vorbei, wann Sie wollen.'],
+ ['Venez prendre l’apéro.','Kommen Sie auf einen Apéro.'],
+ ['Bonne fin de journée !','Einen schönen Tag noch!','am Nachmittag'],
+ ['Bonne soirée !','Einen schönen Abend!'],
+ ['À la prochaine !','Bis zum nächsten Mal!'],
+ ['C’était un plaisir.','Es war mir ein Vergnügen.']]},
+{id:'reagir',area:'talk',name:'Im Gespräch reagieren',items:[
+ ['Ah bon ?','Ach ja? / Wirklich?'],
+ ['C’est vrai ?','Echt?'],
+ ['Tu m’étonnes !','Das glaub ich gern! / Kein Wunder!','ironisch-zustimmend'],
+ ['Je suis tout à fait d’accord.','Ich bin völlig einverstanden.'],
+ ['Pas du tout.','Überhaupt nicht.'],
+ ['Ça dépend.','Es kommt darauf an.'],
+ ['C’est clair.','Ganz klar. / Allerdings.'],
+ ['Exactement.','Genau.'],
+ ['Je vois ce que tu veux dire.','Ich verstehe, was du meinst.'],
+ ['Comment dire…','Wie soll ich sagen …'],
+ ['Je veux dire…','Ich meine …'],
+ ['Tu peux répéter, s’il te plaît ?','Kannst du das bitte wiederholen?'],
+ ['Tu peux parler un peu plus lentement ?','Kannst du etwas langsamer sprechen?'],
+ ['Qu’est-ce que ça veut dire ?','Was bedeutet das?'],
+ ['Comment on dit … en français ?','Wie sagt man … auf Französisch?'],
+ ['Je n’ai pas bien compris.','Ich habe das nicht ganz verstanden.'],
+ ['Ça m’étonnerait.','Das würde mich wundern.'],
+ ['N’importe quoi !','So ein Unsinn!'],
+ ['Tant mieux.','Umso besser.'],
+ ['Tant pis.','Pech gehabt. / Macht nichts.'],
+ ['Ça ne me dérange pas.','Das stört mich nicht.'],
+ ['Volontiers.','Gerne.'],
+ ['Ça marche !','Abgemacht! / Passt!'],
+ ['Bref…','Kurz gesagt …'],
+ ['D’ailleurs…','Übrigens … / Im Übrigen …']]},
+{id:'familier',area:'talk',name:'Umgangssprache',items:[
+ ['le boulot','die Arbeit','familier'],
+ ['la bagnole','das Auto','familier'],
+ ['un pote','ein Kumpel','familier'],
+ ['un truc','ein Ding, eine Sache','familier'],
+ ['le fric','das Geld','familier'],
+ ['les fringues','die Klamotten','familier'],
+ ['bouffer','essen, futtern','familier'],
+ ['Je suis crevé.','Ich bin todmüde.','familier'],
+ ['J’ai la flemme.','Ich habe keine Lust (bin zu faul).','familier'],
+ ['C’est la galère.','Das ist mühsam / ein Krampf.','familier'],
+ ['C’est pas mal.','Das ist ziemlich gut.','gesprochen ohne ne'],
+ ['C’est nul.','Das ist schlecht / blöd.','familier'],
+ ['C’est chiant.','Das ist nervig / langweilig.','vulgär-familiär'],
+ ['Ça me saoule.','Das nervt mich.','familier'],
+ ['T’inquiète.','Keine Sorge.','familier, ohne ne pas'],
+ ['carrément','total, voll','familier'],
+ ['grave','sehr, voll (Jugendsprache)','familier: «j’ai grave faim»'],
+ ['du coup','deshalb, also','sehr häufig im Gesprochenen'],
+ ['genre','so wie, etwa','Füllwort'],
+ ['Pas de souci.','Kein Problem.','sehr häufig'],
+ ['On y va ?','Gehen wir?'],
+ ['Ça roule.','Läuft. / Alles gut.','familier'],
+ ['C’est le bordel.','Es ist ein Chaos.','vulgär-familiär'],
+ ['avoir du mal à','Mühe haben zu'],
+ ['se débrouiller','zurechtkommen']]},
+{id:'vie',area:'talk',name:'Familie, Arbeit, Freizeit',items:[
+ ['mon compagnon / ma compagne','mein Partner / meine Partnerin'],
+ ['On a un fils de onze ans.','Wir haben einen elfjährigen Sohn.'],
+ ['les beaux-parents','die Schwiegereltern'],
+ ['un petit-fils','ein Enkel'],
+ ['Il est à l’école primaire.','Er ist in der Primarschule.'],
+ ['Je bosse à plein temps.','Ich arbeite Vollzeit.','bosser = familier'],
+ ['à temps partiel','Teilzeit'],
+ ['un collègue','ein Arbeitskollege'],
+ ['le patron','der Chef'],
+ ['une entreprise','ein Unternehmen'],
+ ['une association','ein Verein'],
+ ['Je fais de la randonnée.','Ich wandere.'],
+ ['On aime bien faire du vélo.','Wir fahren gern Velo.'],
+ ['le week-end prochain','nächstes Wochenende'],
+ ['les vacances d’été','die Sommerferien'],
+ ['partir en vacances','in die Ferien fahren'],
+ ['se reposer','sich ausruhen'],
+ ['J’ai passé une bonne journée.','Ich hatte einen guten Tag.'],
+ ['Qu’est-ce que tu fais de beau ce week-end ?','Was machst du Schönes am Wochenende?'],
+ ['On a fait une balade.','Wir haben einen Spaziergang gemacht.'],
+ ['les loisirs','die Freizeitbeschäftigungen'],
+ ['un anniversaire','ein Geburtstag'],
+ ['On fête ça !','Das feiern wir!'],
+ ['élever des enfants','Kinder grossziehen'],
+ ['Il grandit vite.','Er wird schnell gross.']]},
+{id:'avis',area:'talk',name:'Gefühle & Meinungen',items:[
+ ['À mon avis…','Meiner Meinung nach …'],
+ ['Je trouve que…','Ich finde, dass …'],
+ ['Je ne pense pas que ce soit vrai.','Ich glaube nicht, dass das stimmt.','Subjonctif nach verneinter Meinung'],
+ ['Ça me fait plaisir.','Das freut mich.'],
+ ['Ça m’énerve.','Das ärgert mich.'],
+ ['J’en ai marre.','Ich habe die Nase voll.','familier'],
+ ['Je suis déçu.','Ich bin enttäuscht.'],
+ ['Je suis ravi.','Ich bin hocherfreut.'],
+ ['Ça me rend triste.','Das macht mich traurig.'],
+ ['Je m’inquiète pour lui.','Ich mache mir Sorgen um ihn.'],
+ ['J’ai hâte de…','Ich freue mich darauf zu … / Ich kann es kaum erwarten …'],
+ ['Ça me manque.','Das fehlt mir.'],
+ ['Tu me manques.','Du fehlst mir.','Achtung: Subjekt ist, was fehlt'],
+ ['Je m’en fiche.','Das ist mir egal.','familier'],
+ ['Ça vaut le coup.','Es lohnt sich.'],
+ ['Ça ne vaut pas la peine.','Es lohnt sich nicht.'],
+ ['être de bonne humeur','gut gelaunt sein'],
+ ['avoir honte','sich schämen'],
+ ['avoir peur de','Angst haben vor'],
+ ['être fier de','stolz sein auf']]},
+{id:'marche',area:'trip',name:'Markt & Einkaufen',items:[
+ ['Je voudrais un kilo de tomates.','Ich hätte gern ein Kilo Tomaten.'],
+ ['Une livre de cerises, s’il vous plaît.','Ein Pfund Kirschen, bitte.'],
+ ['C’est combien, le melon ?','Wie viel kostet die Melone?'],
+ ['Ils sont bien mûrs ?','Sind sie schön reif?'],
+ ['C’est de la région ?','Ist das aus der Region?'],
+ ['Je peux goûter ?','Kann ich probieren?'],
+ ['Et avec ceci ?','Darf es sonst noch etwas sein?'],
+ ['Ce sera tout, merci.','Das ist alles, danke.'],
+ ['Vous avez la monnaie ?','Haben Sie es passend?'],
+ ['Je peux payer par carte ?','Kann ich mit Karte zahlen?'],
+ ['une baguette bien cuite','ein gut gebackenes Baguette'],
+ ['une tranche de jambon','eine Scheibe Schinken'],
+ ['un morceau de fromage de chèvre','ein Stück Ziegenkäse'],
+ ['l’huile d’olive','das Olivenöl'],
+ ['les herbes de Provence','die Kräuter der Provence'],
+ ['un sac','eine Tasche / ein Sack'],
+ ['la caisse','die Kasse'],
+ ['un ticket de caisse','ein Kassenbon'],
+ ['C’est en promotion.','Das ist im Angebot.'],
+ ['Il n’en reste plus.','Es hat keine mehr.']]},
+{id:'resto',area:'trip',name:'Restaurant & Café',items:[
+ ['Vous avez une table pour quatre ?','Haben Sie einen Tisch für vier?'],
+ ['J’ai réservé au nom de Müller.','Ich habe auf den Namen Müller reserviert.'],
+ ['On peut manger en terrasse ?','Können wir draussen essen?'],
+ ['La carte, s’il vous plaît.','Die Speisekarte, bitte.'],
+ ['Qu’est-ce que vous nous conseillez ?','Was empfehlen Sie uns?'],
+ ['le plat du jour','das Tagesgericht'],
+ ['une entrée','eine Vorspeise'],
+ ['un plat principal','ein Hauptgang'],
+ ['le dessert','die Nachspeise'],
+ ['une carafe d’eau','eine Karaffe Wasser'],
+ ['un pichet de rosé','ein Krug Rosé'],
+ ['saignant / à point / bien cuit','blutig / medium / durchgebraten'],
+ ['Je suis végétarien.','Ich bin Vegetarier.'],
+ ['C’était délicieux.','Es war köstlich.'],
+ ['L’addition, s’il vous plaît.','Die Rechnung, bitte.'],
+ ['On peut payer séparément ?','Können wir getrennt zahlen?'],
+ ['Le service est compris ?','Ist die Bedienung inbegriffen?'],
+ ['un café crème','ein Milchkaffee'],
+ ['un demi','ein kleines Bier (25 cl)'],
+ ['Je vous dois combien ?','Was schulde ich Ihnen?']]},
+{id:'route',area:'trip',name:'Unterwegs',items:[
+ ['faire le plein','volltanken'],
+ ['la station-service','die Tankstelle'],
+ ['le gazole','der Diesel'],
+ ['l’autoroute','die Autobahn'],
+ ['le péage','die Mautstelle'],
+ ['le rond-point','der Kreisel'],
+ ['Tournez à gauche au feu.','Biegen Sie bei der Ampel links ab.'],
+ ['Continuez tout droit.','Fahren Sie geradeaus weiter.'],
+ ['C’est loin d’ici ?','Ist es weit von hier?'],
+ ['C’est à dix minutes à pied.','Es ist zehn Minuten zu Fuss.'],
+ ['se garer','parkieren'],
+ ['le parking','der Parkplatz'],
+ ['tomber en panne','eine Panne haben'],
+ ['un pneu crevé','ein platter Reifen'],
+ ['le garagiste','der Mechaniker (Garagist)'],
+ ['les bouchons','der Stau'],
+ ['un aller-retour pour Marseille','eine Hin- und Rückfahrt nach Marseille'],
+ ['Le train a du retard.','Der Zug hat Verspätung.'],
+ ['le contrôleur','der Kondukteur'],
+ ['la correspondance','der Anschluss'],
+ ['le quai','der Bahnsteig'],
+ ['louer une voiture','ein Auto mieten'],
+ ['un village perché','ein Bergdorf (auf einem Hügel)'],
+ ['les gorges','die Schlucht'],
+ ['la route est barrée','die Strasse ist gesperrt']]},
+{id:'sante',area:'trip',name:'Gesundheit',items:[
+ ['la pharmacie de garde','die Notfallapotheke'],
+ ['J’ai mal à la gorge.','Ich habe Halsweh.'],
+ ['J’ai mal au dos.','Ich habe Rückenschmerzen.'],
+ ['J’ai de la fièvre.','Ich habe Fieber.'],
+ ['Je tousse beaucoup.','Ich huste viel.'],
+ ['Je me suis fait piquer par une guêpe.','Ich bin von einer Wespe gestochen worden.'],
+ ['un coup de soleil','ein Sonnenbrand'],
+ ['Je me suis tordu la cheville.','Ich habe mir den Knöchel verstaucht.'],
+ ['Vous avez quelque chose contre…?','Haben Sie etwas gegen …?'],
+ ['sans ordonnance','rezeptfrei'],
+ ['une ordonnance','ein Rezept'],
+ ['prendre rendez-vous chez le médecin','einen Arzttermin vereinbaren'],
+ ['les urgences','die Notaufnahme'],
+ ['Appelez le 15 !','Rufen Sie den 15 an! (Notarzt)'],
+ ['un comprimé','eine Tablette'],
+ ['deux fois par jour','zweimal täglich'],
+ ['la carte européenne d’assurance maladie','die europäische Krankenversicherungskarte'],
+ ['Je suis allergique à…','Ich bin allergisch gegen …'],
+ ['Ça fait mal ici.','Hier tut es weh.'],
+ ['Rien de grave.','Nichts Schlimmes.']]},
+{id:'services',area:'trip',name:'Post, Bank & Ämter',items:[
+ ['la poste','die Post'],
+ ['envoyer un colis','ein Paket schicken'],
+ ['une lettre recommandée','ein eingeschriebener Brief'],
+ ['la boîte aux lettres','der Briefkasten'],
+ ['un distributeur de billets','ein Bancomat'],
+ ['retirer de l’argent','Geld abheben'],
+ ['un virement','eine Überweisung'],
+ ['un relevé d’identité bancaire (RIB)','Bankverbindung (Formular mit IBAN)'],
+ ['la facture','die Rechnung'],
+ ['un justificatif de domicile','ein Wohnsitznachweis'],
+ ['remplir un formulaire','ein Formular ausfüllen'],
+ ['les impôts','die Steuern'],
+ ['la taxe foncière','die Grundsteuer'],
+ ['la taxe d’habitation','die Wohnsteuer (Zweitwohnung)'],
+ ['un rendez-vous à la mairie','ein Termin auf der Gemeinde'],
+ ['la déchetterie','der Werkhof / die Entsorgungsstelle'],
+ ['le tri sélectif','die Abfalltrennung'],
+ ['les heures d’ouverture','die Öffnungszeiten'],
+ ['C’est fermé entre midi et deux.','Über Mittag ist geschlossen.'],
+ ['Il faut faire la queue.','Man muss anstehen.']]},
+{id:'maison',area:'home',name:'Haus & Räume',items:[
+ ['une maison de village','ein Dorfhaus'],
+ ['le rez-de-chaussée','das Erdgeschoss'],
+ ['l’étage','das Obergeschoss'],
+ ['le grenier','der Dachboden'],
+ ['la cave','der Keller'],
+ ['les combles','der Dachstock'],
+ ['le séjour','das Wohnzimmer'],
+ ['la pièce','das Zimmer (allgemein)'],
+ ['les volets','die Fensterläden'],
+ ['la terrasse','die Terrasse'],
+ ['le mur en pierre','die Steinmauer'],
+ ['le toit','das Dach'],
+ ['les tuiles','die Ziegel'],
+ ['la cheminée','der Kamin'],
+ ['le poêle à bois','der Holzofen'],
+ ['le chauffage','die Heizung'],
+ ['la chaudière','der Heizkessel'],
+ ['le chauffe-eau','der Boiler'],
+ ['le compteur électrique','der Stromzähler'],
+ ['le tableau électrique','der Sicherungskasten'],
+ ['les murs sont humides','die Wände sind feucht'],
+ ['l’humidité','die Feuchtigkeit'],
+ ['les fissures','die Risse'],
+ ['la résidence secondaire','der Zweitwohnsitz'],
+ ['le terrain','das Grundstück']]},
+{id:'travaux',area:'home',name:'Renovation & Handwerker',items:[
+ ['faire des travaux','renovieren, umbauen'],
+ ['un artisan','ein Handwerker'],
+ ['le plombier','der Sanitär (Installateur)'],
+ ['l’électricien','der Elektriker'],
+ ['le maçon','der Maurer'],
+ ['le couvreur','der Dachdecker'],
+ ['le menuisier','der Schreiner'],
+ ['le carreleur','der Plattenleger'],
+ ['le peintre','der Maler'],
+ ['Vous pourriez me faire un devis ?','Könnten Sie mir eine Offerte machen?'],
+ ['un devis gratuit','eine kostenlose Offerte'],
+ ['Les travaux vont durer combien de temps ?','Wie lange dauern die Arbeiten?'],
+ ['Quand est-ce que vous pouvez commencer ?','Wann können Sie anfangen?'],
+ ['le chantier','die Baustelle'],
+ ['un acompte','eine Anzahlung'],
+ ['Il y a une fuite d’eau.','Es hat ein Wasserleck.'],
+ ['Le chauffe-eau est en panne.','Der Boiler ist kaputt.'],
+ ['Les fusibles ont sauté.','Die Sicherungen sind herausgesprungen.'],
+ ['refaire la toiture','das Dach neu machen'],
+ ['isoler les combles','den Dachstock isolieren'],
+ ['l’isolation','die Isolation'],
+ ['changer les fenêtres','die Fenster ersetzen'],
+ ['le double vitrage','die Doppelverglasung'],
+ ['la pompe à chaleur','die Wärmepumpe'],
+ ['le diagnostic de performance énergétique (DPE)','der Energieausweis (DPE)'],
+ ['la rénovation énergétique','die energetische Sanierung'],
+ ['une aide de l’État','eine staatliche Förderung'],
+ ['C’est aux normes ?','Entspricht das den Vorschriften?'],
+ ['La facture est plus élevée que le devis.','Die Rechnung ist höher als die Offerte.'],
+ ['On n’est pas pressés.','Wir haben es nicht eilig.']]},
+{id:'voisins',area:'home',name:'Garten, Nachbarn & Gemeinde',items:[
+ ['le voisin / la voisine','der Nachbar / die Nachbarin'],
+ ['le jardin','der Garten'],
+ ['tondre la pelouse','den Rasen mähen'],
+ ['tailler la haie','die Hecke schneiden'],
+ ['débroussailler','Gestrüpp entfernen (Brandschutz)'],
+ ['l’obligation de débroussaillement','die Pflicht zur Buschrodung'],
+ ['l’arrosage','das Giessen'],
+ ['le puits','der Brunnen (Schacht)'],
+ ['la fosse septique','die Klärgrube'],
+ ['le raccordement au tout-à-l’égout','der Anschluss an die Kanalisation'],
+ ['la mairie','das Gemeindehaus'],
+ ['le maire','der Gemeindepräsident (Bürgermeister)'],
+ ['un permis de construire','eine Baubewilligung'],
+ ['une déclaration préalable de travaux','eine Bauanzeige'],
+ ['le cadastre','das Grundbuch / Kataster'],
+ ['le notaire','der Notar'],
+ ['Pourriez-vous garder un œil sur la maison ?','Könnten Sie ein Auge auf das Haus haben?'],
+ ['On rentre en Suisse dimanche.','Wir fahren am Sonntag in die Schweiz zurück.'],
+ ['Je vous laisse mon numéro.','Ich gebe Ihnen meine Nummer.'],
+ ['On peut se rendre service.','Wir können uns gegenseitig aushelfen.']]},
+{id:'medias',area:'news',name:'Medien & Politik',items:[
+ ['l’actualité','das Zeitgeschehen'],
+ ['les infos','die Nachrichten'],
+ ['un journal','eine Zeitung'],
+ ['un article','ein Artikel'],
+ ['un rédacteur en chef','ein Chefredaktor'],
+ ['les réseaux sociaux','die sozialen Medien'],
+ ['une fausse information','eine Falschmeldung'],
+ ['le gouvernement','die Regierung'],
+ ['le Premier ministre','der Premierminister'],
+ ['l’Assemblée nationale','die Nationalversammlung'],
+ ['les élections','die Wahlen'],
+ ['voter','abstimmen, wählen'],
+ ['une votation','eine Volksabstimmung (Schweiz)'],
+ ['un sondage','eine Umfrage'],
+ ['la gauche / la droite','die Linke / die Rechte'],
+ ['un parti','eine Partei'],
+ ['une manifestation','eine Demonstration'],
+ ['une grève','ein Streik'],
+ ['une réforme','eine Reform'],
+ ['le débat public','die öffentliche Debatte'],
+ ['un enjeu','eine Herausforderung, worum es geht'],
+ ['être au courant','auf dem Laufenden sein'],
+ ['faire la une','Schlagzeilen machen'],
+ ['la liberté de la presse','die Pressefreiheit'],
+ ['une enquête','eine Recherche / Untersuchung']]},
+{id:'societe',area:'news',name:'Gesellschaft & Umwelt',items:[
+ ['la société','die Gesellschaft'],
+ ['les inégalités','die Ungleichheiten'],
+ ['le racisme','der Rassismus'],
+ ['les discriminations','die Diskriminierungen'],
+ ['l’immigration','die Einwanderung'],
+ ['l’intégration','die Integration'],
+ ['le pouvoir d’achat','die Kaufkraft'],
+ ['le coût de la vie','die Lebenshaltungskosten'],
+ ['le chômage','die Arbeitslosigkeit'],
+ ['les retraites','die Renten'],
+ ['le logement','das Wohnen, die Wohnung'],
+ ['le réchauffement climatique','die Klimaerwärmung'],
+ ['la sécheresse','die Trockenheit'],
+ ['les incendies de forêt','die Waldbrände'],
+ ['les énergies renouvelables','die erneuerbaren Energien'],
+ ['la transition écologique','der ökologische Wandel'],
+ ['réduire les émissions','die Emissionen senken'],
+ ['le monde rural','die ländliche Welt'],
+ ['la désertification des villages','die Entvölkerung der Dörfer'],
+ ['le tourisme de masse','der Massentourismus'],
+ ['les jeunes','die Jugendlichen'],
+ ['l’éducation','die Bildung'],
+ ['l’intelligence artificielle','die künstliche Intelligenz'],
+ ['la laïcité','die Laizität'],
+ ['un sujet sensible','ein heikles Thema']]},
+{id:'argumenter',area:'news',name:'Argumentieren',items:[
+ ['D’un côté… de l’autre…','Einerseits … andererseits …'],
+ ['En revanche,','Hingegen'],
+ ['Pourtant,','Trotzdem / Dabei'],
+ ['Néanmoins,','Nichtsdestotrotz'],
+ ['Il faut dire que…','Man muss sagen, dass …'],
+ ['Il est vrai que…, mais…','Es stimmt zwar, dass …, aber …'],
+ ['Je ne suis pas sûr que ce soit une bonne idée.','Ich bin nicht sicher, ob das eine gute Idee ist.'],
+ ['Ce qui me gêne, c’est…','Was mich stört, ist …'],
+ ['Le problème, c’est que…','Das Problem ist, dass …'],
+ ['Par exemple,','Zum Beispiel'],
+ ['Autrement dit,','Mit anderen Worten'],
+ ['En fait,','Eigentlich / Tatsächlich'],
+ ['Au fond,','Im Grunde'],
+ ['Quand même,','Immerhin / Trotzdem'],
+ ['Je comprends ton point de vue, mais…','Ich verstehe deine Sicht, aber …'],
+ ['On ne peut pas généraliser.','Man kann nicht verallgemeinern.'],
+ ['Ça reste à prouver.','Das muss sich erst noch zeigen.'],
+ ['Il ne faut pas tout mélanger.','Man darf nicht alles vermischen.'],
+ ['Ça dépend du point de vue.','Das hängt vom Standpunkt ab.'],
+ ['C’est un faux débat.','Das ist eine Scheindebatte.'],
+ ['Je change d’avis.','Ich ändere meine Meinung.'],
+ ['Tu as raison sur ce point.','In diesem Punkt hast du recht.'],
+ ['Là, je ne te suis pas.','Da komme ich nicht mit. / Da bin ich anderer Meinung.'],
+ ['En somme,','Alles in allem'],
+ ['Pour conclure,','Abschliessend']]}
+];
+
+// Grammatik B1 → B2
+// Aufgaben: ['c', Satz, Lösung, [Optionen], Erklärung]  Auswahl
+//           ['t', Satz, 'Lösung|Variante', Erklärung]     Tippen (Hinweis in Klammern)
+const GRAM=[
+{id:'present',name:'Präsens der wichtigen unregelmässigen Verben',lvl:'B1',
+ text:'Die häufigsten Verben sind unregelmässig. Achte besonders auf die Formen mit <b>nous</b>, <b>vous</b> und <b>ils</b>.',
+ ex:[['Vous faites quoi ce soir ?','Was macht ihr heute Abend?'],['Ils prennent le train.','Sie nehmen den Zug.'],['Nous devons partir.','Wir müssen gehen.'],['Ils viennent demain.','Sie kommen morgen.']],
+ items:[
+ ['t','Vous ___ quoi, dans la vie ? (faire)','faites','vous faites (nicht «faisez»).'],
+ ['t','Ils ___ le bus tous les matins. (prendre)','prennent','ils prennent, mit zwei n.'],
+ ['t','Nous ___ partir tôt demain. (devoir)','devons','nous devons.'],
+ ['t','Ils ___ d’Italie. (venir)','viennent','ils viennent.'],
+ ['t','Vous ___ quoi ? Je n’ai pas entendu. (dire)','dites','vous dites (nicht «disez»).'],
+ ['t','Je ne ___ pas où il habite. (savoir)','sais','je sais.'],
+ ['t','Ils ___ que c’est trop cher. (croire)','croient','ils croient.'],
+ ['t','On ___ la table dehors ? (mettre)','met','on met.'],
+ ['c','Est-ce que tu ___ venir avec nous ?','peux',['peux','peut','pouvez'],'tu peux.'],
+ ['c','Ils ___ acheter une maison.','veulent',['veulent','voulent','veuillent'],'ils veulent.'],
+ ['c','Nous ___ nos voisins ce soir.','voyons',['voyons','voyions','voions'],'nous voyons.'],
+ ['c','Ça ne ___ pas très bien.','va',['va','vas','vont'],'ça va.']]},
+{id:'pc',name:'Passé composé: avoir oder être',lvl:'B1',
+ text:'Die meisten Verben bilden das Passé composé mit <b>avoir</b>. Mit <b>être</b>: Verben der Bewegung und Zustandsänderung (aller, venir, partir, arriver, entrer, sortir, monter, descendre, naître, mourir, rester, tomber, retourner …) und alle reflexiven Verben. Dann richtet sich das Partizip nach dem Subjekt.',
+ ex:[['Nous sommes arrivés hier.','Wir sind gestern angekommen.'],['Elle s’est levée tôt.','Sie ist früh aufgestanden.'],['J’ai pris le train.','Ich habe den Zug genommen.']],
+ items:[
+ ['c','Hier, nous ___ allés au marché.','sommes',['sommes','avons'],'aller → être.'],
+ ['c','Elle ___ restée à la maison.','est',['est','a'],'rester → être.'],
+ ['c','Ils ___ beaucoup marché.','ont',['ont','sont'],'marcher → avoir.'],
+ ['c','Je ___ tombé dans l’escalier.','suis',['suis','ai'],'tomber → être.'],
+ ['c','Elle ___ sorti la poubelle.','a',['a','est'],'sortir mit Objekt (etwas hinaustragen) → avoir.'],
+ ['t','J’ai ___ le train de 8 heures. (prendre)','pris','prendre → pris.'],
+ ['t','Tu as ___ ce film ? (voir)','vu','voir → vu.'],
+ ['t','Il a ___ son travail en mai. (finir)','fini','finir → fini.'],
+ ['t','On a ___ une belle balade. (faire)','fait','faire → fait.'],
+ ['t','Vous avez ___ la nouvelle ? (lire)','lu','lire → lu.'],
+ ['t','Elles sont ___ hier soir. (partir)','parties','partir → être, Partizip angeglichen: parties.'],
+ ['t','Nous nous sommes bien ___. (amuser)','amusés|amusées','reflexiv → être, Plural: amusés.']]},
+{id:'accord',name:'Angleichung des Partizips',lvl:'B2',
+ text:'Mit <b>être</b> gleicht sich das Partizip dem Subjekt an. Mit <b>avoir</b> nur, wenn das direkte Objekt <i>vor</i> dem Verb steht (Pronomen la, les, que …).',
+ ex:[['La maison ? On l’a achetée en 2023.','Das Haus? Wir haben es 2023 gekauft.'],['Les fenêtres que j’ai changées…','Die Fenster, die ich ersetzt habe …'],['Elle a acheté une maison.','Sie hat ein Haus gekauft. (keine Angleichung)']],
+ items:[
+ ['c','Les tomates ? Je les ai ___ au marché.','achetées',['achetées','acheté','achetés'],'les (= les tomates, weiblich Plural) steht vor dem Verb.'],
+ ['c','Elle a ___ une lettre.','écrit',['écrit','écrite'],'Objekt steht nach dem Verb → keine Angleichung.'],
+ ['c','La lettre qu’elle a ___ est très longue.','écrite',['écrite','écrit'],'que = la lettre, steht vor dem Verb.'],
+ ['c','Mes clés ? Je ne les ai pas ___.','trouvées',['trouvées','trouvé'],'les = mes clés (weiblich Plural).'],
+ ['c','Ils ont ___ leurs amis à Aix.','vu',['vu','vus'],'Objekt nach dem Verb.'],
+ ['c','Marie, tu l’as ___ ?','appelée',['appelée','appelé'],'l’ = Marie.'],
+ ['t','Les travaux qu’on a ___ ont coûté cher. (faire)','faits','que = les travaux (männlich Plural) → faits.'],
+ ['t','Ma voisine ? Je l’ai ___ hier. (voir)','vue','l’ = ma voisine → vue.']]},
+{id:'imparfait',name:'Imparfait oder Passé composé',lvl:'B1',
+ text:'<b>Imparfait</b>: Hintergrund, Beschreibung, Gewohnheit, was gerade lief. <b>Passé composé</b>: einzelne, abgeschlossene Ereignisse, die die Geschichte vorantreiben.',
+ ex:[['Il pleuvait quand on est arrivés.','Es regnete, als wir ankamen.'],['Avant, j’allais souvent à Paris.','Früher ging ich oft nach Paris.'],['Hier, j’ai vu Paul.','Gestern habe ich Paul gesehen.']],
+ items:[
+ ['c','Quand j’étais petit, j’___ au foot tous les samedis.','jouais',['jouais','ai joué'],'Gewohnheit → imparfait.'],
+ ['c','Il ___ beau, alors on est sortis.','faisait',['faisait','a fait'],'Hintergrund (Wetter) → imparfait.'],
+ ['c','Soudain, le téléphone ___.','a sonné',['a sonné','sonnait'],'plötzliches Ereignis → passé composé.'],
+ ['c','Je dormais quand tu ___.','as appelé',['as appelé','appelais'],'Ereignis unterbricht eine laufende Handlung.'],
+ ['c','La maison ___ très humide quand on l’a achetée.','était',['était','a été'],'Zustand/Beschreibung → imparfait.'],
+ ['c','L’année dernière, on ___ trois fois en Provence.','est allés',['est allés','allait'],'abgezählte, abgeschlossene Ereignisse → passé composé.'],
+ ['t','Avant, nous ___ à Berne. (habiter)','habitions','nous habitions.'],
+ ['t','Il y ___ beaucoup de monde au marché. (avoir)','avait','il y avait.'],
+ ['t','Je ___ fatigué, donc je suis rentré. (être)','étais','j’étais.'],
+ ['t','Qu’est-ce que tu ___ quand je t’ai appelé ? (faire)','faisais','tu faisais.']]},
+{id:'pqp',name:'Plus-que-parfait',lvl:'B1',
+ text:'Vorvergangenheit: was <b>vor</b> einem anderen vergangenen Ereignis passiert war. Bildung: imparfait von avoir/être + Partizip.',
+ ex:[['Quand on est arrivés, le film avait déjà commencé.','Als wir ankamen, hatte der Film schon begonnen.'],['Il m’a dit qu’il était déjà parti.','Er sagte mir, er sei schon gegangen.']],
+ items:[
+ ['c','Quand je suis arrivé, ils ___ déjà mangé.','avaient',['avaient','ont','auraient'],'vorher abgeschlossen → plus-que-parfait.'],
+ ['c','Elle ___ partie avant la fin.','était',['était','avait'],'partir → être.'],
+ ['t','Je n’avais jamais ___ un si beau village. (voir)','vu','avais vu.'],
+ ['t','On ___ réservé, heureusement. (avoir → imparfait)','avait','on avait réservé.'],
+ ['t','Ils m’ont dit qu’ils ___ déjà venus. (être)','étaient','ils étaient venus.'],
+ ['c','Le plombier n’est pas venu, alors que je l’___ appelé deux fois.','avais',['avais','ai','aurais'],'Das Anrufen war vorher → plus-que-parfait.']]},
+{id:'futur',name:'Futur proche, Futur simple, Futur antérieur',lvl:'B1',
+ text:'<b>Futur proche</b> (aller + Grundform) im Gesprochenen für Pläne. <b>Futur simple</b> für Vorhersagen und Versprechen; unregelmässige Stämme: ser-, aur-, ir-, fer-, pourr-, viendr-, verr-, devr-, saur-, voudr-, faudr-. <b>Futur antérieur</b>: was in der Zukunft schon vorbei sein wird. Nach <b>quand</b> steht im Französischen Futur (nicht Präsens).',
+ ex:[['On va manger chez des amis.','Wir gehen bei Freunden essen.'],['Je te le dirai demain.','Ich sage es dir morgen.'],['Quand tu arriveras, on aura fini.','Wenn du ankommst, sind wir fertig.']],
+ items:[
+ ['t','Demain, il ___ beau. (faire → futur simple)','fera','faire → fera.'],
+ ['t','Nous ___ en août. (venir → futur simple)','viendrons','venir → viendr-.'],
+ ['t','Tu ___ le temps ? (avoir → futur simple)','auras','avoir → aur-.'],
+ ['t','Je ___ ce que je peux. (faire → futur simple)','ferai','je ferai.'],
+ ['t','On ___ à la plage cet après-midi. (aller → futur simple)','ira','aller → ir-.'],
+ ['t','Il ___ refaire le toit. (falloir → futur simple)','faudra','falloir → faudra.'],
+ ['c','Quand tu ___ à Vachères, appelle-moi.','arriveras',['arriveras','arrives'],'nach quand mit Zukunftsbezug → futur.'],
+ ['c','Je te rappellerai dès que j’___ le devis.','aurai reçu',['aurai reçu','ai reçu','recevrai'],'zuerst Offerte erhalten (futur antérieur), dann anrufen.'],
+ ['t','On ___ (aller → futur proche) manger dehors ce soir.','va','on va manger.'],
+ ['c','D’ici vendredi, les ouvriers ___ fini.','auront',['auront','ont','avaient'],'bis Freitag abgeschlossen → futur antérieur.']]},
+{id:'pronoms',name:'Objektpronomen: le, la, les, lui, leur',lvl:'B1',
+ text:'<b>Direktes Objekt</b> (wen/was?): le, la, l’, les. <b>Indirektes Objekt</b> mit à (wem?): lui, leur. Pronomen stehen vor dem konjugierten Verb, bei Verb + Grundform vor der Grundform. Achtung: téléphoner <b>à</b>, demander <b>à</b>, répondre <b>à</b>, dire <b>à</b> → lui/leur; aider, appeler, écouter, attendre → direkt.',
+ ex:[['Je lui ai téléphoné.','Ich habe ihn/sie angerufen.'],['Je vais les appeler.','Ich werde sie anrufen.'],['Tu l’as vu ?','Hast du ihn gesehen?']],
+ items:[
+ ['c','Le plombier ? Je ___ ai téléphoné ce matin.','lui',['lui','l’','le'],'téléphoner à quelqu’un → lui.'],
+ ['c','Mes voisins ? Je ___ aide souvent.','les',['les','leur'],'aider quelqu’un (direkt) → les.'],
+ ['c','Tes parents ? Tu ___ as répondu ?','leur',['leur','les'],'répondre à → leur.'],
+ ['c','Cette maison, on ___ adore.','l’',['l’','lui','la lui'],'adorer quelque chose → direkt: l’.'],
+ ['c','Je vais ___ demander conseil. (à ma voisine)','lui',['lui','la'],'demander à → lui.'],
+ ['c','Le devis ? Je ne ___ ai pas encore reçu.','l’',['l’','lui','le lui'],'recevoir quelque chose → l’.'],
+ ['c','Mes amis ? Je ___ attends depuis une heure.','les',['les','leur'],'attendre quelqu’un (direkt).'],
+ ['t','Tu connais Marie ? Oui, je ___ connais bien.','la','connaître quelqu’un → la.'],
+ ['t','Tu as écrit à tes parents ? Oui, je ___ ai écrit.','leur','écrire à → leur.'],
+ ['t','Tu peux appeler Paul ? Oui, je vais ___ appeler.','l’','appeler quelqu’un → l’ (vor Vokal).']]},
+{id:'yen',name:'Die Pronomen y und en',lvl:'B1',
+ text:'<b>en</b> ersetzt einen Ausdruck mit <b>de</b> (Menge, du/de la/des, parler de, avoir besoin de) und behält Mengenangaben am Ende: «J’en ai deux». <b>y</b> ersetzt einen Ort oder eine Sache mit <b>à</b> (penser à quelque chose, aller à …). Für Personen nach à steht lui/leur, nach de steht de lui/d’elle.',
+ ex:[['Des tomates ? J’en prends un kilo.','Tomaten? Ich nehme ein Kilo davon.'],['La Provence ? On y va en juillet.','Die Provence? Wir fahren im Juli hin.'],['Tu y penses ?','Denkst du daran?']],
+ items:[
+ ['c','Du pain ? Oui, j’___ ai acheté.','en',['en','y','l’'],'du pain → en.'],
+ ['c','Tu vas au marché ? Oui, j’___ vais.','y',['y','en'],'Ort mit à → y.'],
+ ['c','Tu as besoin de la voiture ? Oui, j’___ ai besoin.','en',['en','y'],'avoir besoin de → en.'],
+ ['c','Tu penses à ton rendez-vous ? Oui, j’___ pense.','y',['y','en','lui'],'penser à quelque chose → y.'],
+ ['c','Tu penses à ta mère ? Oui, je pense ___.','à elle',['à elle','y','lui'],'penser à + Person → à elle.'],
+ ['c','Combien de chambres il y a ? Il y ___ a trois.','en',['en','y','les'],'Menge → en … trois.'],
+ ['c','On parle de politique ? Non, on n’___ parle pas à table.','en',['en','y','le'],'parler de → en.'],
+ ['t','Tu viens de la plage ? Oui, j’___ viens.','en','venir de (Herkunft) → en.'],
+ ['t','Vous habitez à Berne ? Oui, nous ___ habitons.','y','à Berne → y.'],
+ ['t','Il reste du vin ? Non, il n’y ___ a plus.','en','il n’y en a plus.']]},
+{id:'doubles',name:'Zwei Pronomen und Imperativ',lvl:'B2',
+ text:'Reihenfolge vor dem Verb: <b>me/te/se/nous/vous → le/la/les → lui/leur → y → en</b>. Im bejahten Imperativ stehen die Pronomen nach dem Verb: <b>Donne-le-moi !</b>, <b>Vas-y !</b>, <b>Prends-en !</b>. Im verneinten Imperativ normal davor: <b>Ne me le donne pas.</b>',
+ ex:[['Je te le prête.','Ich leihe es dir.'],['Je le lui ai dit.','Ich habe es ihm gesagt.'],['Il y en a encore.','Es hat noch davon.'],['Donnez-m’en deux.','Geben Sie mir zwei davon.']],
+ items:[
+ ['c','Le livre ? Je ___ ai prêté. (à Paul)','le lui',['le lui','lui le','l’y'],'le vor lui.'],
+ ['c','Les clés ? Tu peux ___ donner ? (à moi)','me les',['me les','les me','les moi'],'me vor les.'],
+ ['c','Le devis ? Il ___ a envoyé hier. (à nous)','nous l’',['nous l’','l’ nous','le nous'],'nous vor le.'],
+ ['c','Des pommes ? Je ___ ai donné. (à elles)','leur en',['leur en','en leur','les en'],'leur vor en.'],
+ ['c','Tu me passes le sel ? Oui, je ___ passe.','te le',['te le','le te','te lui'],'te vor le.'],
+ ['c','Imperativ: «Gib es mir!» (le livre)','Donne-le-moi !',['Donne-le-moi !','Donne-moi-le !','Le-moi donne !'],'bejahter Imperativ: Verb – le – moi.'],
+ ['c','Verneint: «Sag es mir nicht!»','Ne me le dis pas !',['Ne me le dis pas !','Ne le me dis pas !','Ne dis-le-moi pas !'],'verneint: normale Reihenfolge vor dem Verb.'],
+ ['t','Va au marché ! → ___ ! (mit y)','Vas-y','Vor y bekommt va ein s: Vas-y.'],
+ ['t','Prends des cerises ! → ___ ! (mit en)','Prends-en','Prends-en !'],
+ ['t','Il y a encore du pain ? Oui, il y ___ a.','en','il y en a.']]},
+{id:'relatifs',name:'Relativpronomen qui, que, où, dont',lvl:'B1',
+ text:'<b>qui</b> = Subjekt. <b>que</b> = direktes Objekt. <b>où</b> = Ort und Zeit (le jour où …). <b>dont</b> ersetzt einen Ausdruck mit <b>de</b>: parler de, avoir besoin de, être fier de, la maison dont le toit …',
+ ex:[['L’artisan qui est venu…','Der Handwerker, der gekommen ist …'],['Le village où on habite…','Das Dorf, in dem wir wohnen …'],['La maison dont je t’ai parlé…','Das Haus, von dem ich dir erzählt habe …']],
+ items:[
+ ['c','Le maçon ___ a fait le mur est très bon.','qui',['qui','que','dont'],'Subjekt → qui.'],
+ ['c','Le devis ___ j’ai reçu est trop cher.','que',['que','qui','dont'],'Objekt → que.'],
+ ['c','C’est le village ___ on a acheté la maison.','où',['où','que','dont'],'Ort → où.'],
+ ['c','C’est l’outil ___ j’ai besoin.','dont',['dont','que','où'],'avoir besoin de → dont.'],
+ ['c','Je me souviens du jour ___ on s’est rencontrés.','où',['où','que','quand'],'le jour où.'],
+ ['c','C’est une région ___ je suis tombé amoureux.','dont',['dont','que','où'],'tomber amoureux de → dont.'],
+ ['c','La maison ___ le toit est rouge, c’est la nôtre.','dont',['dont','où','que'],'le toit de la maison → dont.'],
+ ['c','Le film ___ tu m’as conseillé était génial.','que',['que','dont','qui'],'conseiller quelque chose → que.'],
+ ['t','Voilà la voisine ___ nous garde les clés.','qui','Subjekt → qui.'],
+ ['t','C’est un sujet ___ on parle beaucoup en ce moment.','dont','parler de → dont.']]},
+{id:'lequel',name:'Lequel, auquel, ce qui, ce que',lvl:'B2',
+ text:'Nach Präpositionen: <b>avec qui</b> (Person), <b>avec lequel / laquelle / lesquels</b> (Sache). à + lequel = <b>auquel</b>, de + lequel = <b>duquel</b> (nach à côté de, près de …). <b>ce qui</b> / <b>ce que</b> = was (Subjekt / Objekt), oft am Satzanfang: «Ce qui me plaît, c’est …».',
+ ex:[['La raison pour laquelle je suis venu…','Der Grund, weshalb ich gekommen bin …'],['Le projet auquel je pense…','Das Projekt, an das ich denke …'],['Ce que j’aime ici, c’est le calme.','Was ich hier mag, ist die Ruhe.']],
+ items:[
+ ['c','La raison pour ___ je t’appelle, c’est le devis.','laquelle',['laquelle','lequel','quoi'],'la raison → laquelle.'],
+ ['c','Le problème ___ je pense, c’est l’humidité.','auquel',['auquel','duquel','lequel'],'penser à + lequel → auquel.'],
+ ['c','La personne avec ___ j’ai parlé était sympa.','qui',['qui','que','dont'],'Nach Präposition bei Personen: avec qui.'],
+ ['c','Le parc près ___ on habite est magnifique.','duquel',['duquel','auquel','dont'],'près de + lequel → duquel.'],
+ ['c','___ me plaît ici, c’est le calme.','Ce qui',['Ce qui','Ce que','Qu’est-ce qui'],'Subjekt → ce qui.'],
+ ['c','Dis-moi ___ tu veux manger.','ce que',['ce que','qu’est-ce que','ce qui'],'Objekt in indirekter Frage → ce que.'],
+ ['c','Les outils avec ___ il travaille sont anciens.','lesquels',['lesquels','lesquelles','qui'],'les outils → lesquels.'],
+ ['t','Je ne comprends pas ___ (ce qui / ce que) il dit.','ce que','dire quelque chose → Objekt → ce que.'],
+ ['t','Je ne sais pas ___ (ce qui / ce que) s’est passé.','ce qui','Subjekt von s’est passé → ce qui.']]},
+{id:'conditionnel',name:'Conditionnel: höflich bitten, raten, bedauern',lvl:'B1',
+ text:'Bildung: Futur-Stamm + Imparfait-Endungen (je voudrais, tu pourrais, il faudrait). Verwendung: höfliche Bitte, Wunsch, Rat (<b>tu devrais</b>), Vermutung in den Medien (<b>le ministre démissionnerait</b>). <b>Conditionnel passé</b> (aurais/serais + Partizip) für Bedauern und Vorwurf: <b>J’aurais dû…</b>, <b>Tu aurais pu…</b>',
+ ex:[['Vous pourriez m’aider ?','Könnten Sie mir helfen?'],['Tu devrais te reposer.','Du solltest dich ausruhen.'],['J’aurais dû réserver.','Ich hätte reservieren sollen.']],
+ items:[
+ ['t','Je ___ deux baguettes, s’il vous plaît. (vouloir)','voudrais','je voudrais.'],
+ ['t','Vous ___ me faire un devis ? (pouvoir)','pourriez','vous pourriez.'],
+ ['t','Tu ___ voir un médecin. (devoir)','devrais','Rat → tu devrais.'],
+ ['t','Il ___ changer les fenêtres. (falloir)','faudrait','il faudrait.'],
+ ['t','Ce ___ génial ! (être)','serait','ce serait.'],
+ ['t','J’___ bien un café. (aimer)','aimerais','j’aimerais.'],
+ ['c','Tu ___ me prévenir ! (Vorwurf)','aurais pu',['aurais pu','pourrais','as pu'],'Vorwurf über Vergangenes → conditionnel passé.'],
+ ['c','On ___ partir plus tôt. (Bedauern)','aurait dû',['aurait dû','devrait','a dû'],'Bedauern → aurait dû.'],
+ ['c','Selon la presse, le ministre ___ démissionner.','pourrait',['pourrait','peut','pourra'],'unbestätigte Meldung → conditionnel.'],
+ ['t','À ta place, je ___ le devis. (refuser)','refuserais','À ta place, je + conditionnel.']]},
+{id:'si',name:'Bedingungssätze mit si',lvl:'B2',
+ text:'<b>si + Präsens → Futur/Präsens</b>: real. <b>si + Imparfait → Conditionnel</b>: irreal Gegenwart. <b>si + Plus-que-parfait → Conditionnel passé</b>: irreal Vergangenheit. Nach <b>si</b> nie Futur oder Conditionnel!',
+ ex:[['S’il pleut, on restera à la maison.','Wenn es regnet, bleiben wir zu Hause.'],['Si j’avais le temps, je viendrais.','Wenn ich Zeit hätte, würde ich kommen.'],['Si on avait su, on serait venus.','Hätten wir es gewusst, wären wir gekommen.']],
+ items:[
+ ['c','S’il fait beau demain, on ___ à la plage.','ira',['ira','irait','serait allé'],'si + présent → futur.'],
+ ['c','Si j’avais plus de temps, je ___ plus souvent.','viendrais',['viendrais','viendrai','serais venu'],'si + imparfait → conditionnel.'],
+ ['c','Si tu m’avais appelé, je t’___ aidé.','aurais',['aurais','avais','aurai'],'si + plus-que-parfait → conditionnel passé.'],
+ ['c','Si j’___ riche, j’achèterais un mas.','étais',['étais','serais','suis'],'nach si nie conditionnel.'],
+ ['c','S’il ___ demain, on annulera.','pleut',['pleut','pleuvra','pleuvait'],'nach si kein futur.'],
+ ['t','Si nous ___ (savoir), nous serions venus plus tôt.','avions su','si + plus-que-parfait.'],
+ ['t','Si tu ___ (vouloir), on peut y aller ensemble.','veux','real → présent.'],
+ ['t','Si on avait réservé, on ___ (avoir) une table.','aurait eu','irreal Vergangenheit → conditionnel passé.'],
+ ['t','Qu’est-ce que tu ferais si tu ___ (gagner) au loto ?','gagnais','si + imparfait.']]},
+{id:'subj1',name:'Subjonctif: die Formen',lvl:'B2',
+ text:'Regelmässig: Stamm der ils-Form im Präsens + -e, -es, -e, -ions, -iez, -ent (ils finissent → que je finisse). Unregelmässig: <b>être</b> (sois, soit, soyons), <b>avoir</b> (aie, ait, ayons), <b>faire</b> (fasse), <b>aller</b> (aille, allions), <b>pouvoir</b> (puisse), <b>savoir</b> (sache), <b>vouloir</b> (veuille), <b>venir</b> (vienne, venions), <b>prendre</b> (prenne, prenions).',
+ ex:[['Il faut que tu viennes.','Du musst kommen.'],['Il faut que je fasse les courses.','Ich muss einkaufen.'],['Je veux que ce soit fini.','Ich will, dass es fertig ist.']],
+ items:[
+ ['t','Il faut que tu ___ patient. (être)','sois','être → que tu sois.'],
+ ['t','Il faut que nous ___ le temps. (avoir)','ayons','avoir → que nous ayons.'],
+ ['t','Il faut que je ___ les courses. (faire)','fasse','faire → que je fasse.'],
+ ['t','Il faut qu’on y ___ ensemble. (aller)','aille','aller → qu’on aille.'],
+ ['t','Il faut que vous ___ avant midi. (venir)','veniez','venir → que vous veniez.'],
+ ['t','Il faut qu’il ___ le train de 7 heures. (prendre)','prenne','prendre → qu’il prenne.'],
+ ['t','Je voudrais que tu ___ la vérité. (savoir)','saches','savoir → que tu saches.'],
+ ['t','Il faut que je ___ ce travail. (finir)','finisse','ils finissent → que je finisse.'],
+ ['t','J’aimerais qu’ils ___ venir. (pouvoir)','puissent','pouvoir → qu’ils puissent.'],
+ ['t','Il faut que tu ___ ton frère. (attendre)','attendes','ils attendent → que tu attendes.']]},
+{id:'subj2',name:'Subjonctif: wann?',lvl:'B2',
+ text:'Subjonctif nach: Notwendigkeit (<b>il faut que</b>), Wille (<b>vouloir que, souhaiter que</b>), Gefühl (<b>content que, avoir peur que, regretter que</b>), Zweifel und <b>verneinter Meinung</b> (je ne pense pas que), Konjunktionen <b>bien que, pour que, avant que, à condition que, sans que</b>. Indikativ nach: <b>je pense que, je crois que, il est sûr que, après que, parce que</b>. Gleiches Subjekt → Grundform: «Je veux partir» (nicht «que je parte»).',
+ ex:[['Je ne crois pas qu’il vienne.','Ich glaube nicht, dass er kommt.'],['Je crois qu’il viendra.','Ich glaube, dass er kommt.'],['Bien qu’il soit tard, on continue.','Obwohl es spät ist, machen wir weiter.']],
+ items:[
+ ['c','Je pense qu’il ___ raison.','a',['a','ait'],'je pense que → Indikativ.'],
+ ['c','Je ne pense pas qu’il ___ raison.','ait',['ait','a'],'verneinte Meinung → Subjonctif.'],
+ ['c','Bien qu’il ___ cher, le devis est raisonnable.','soit',['soit','est','sera'],'bien que → Subjonctif.'],
+ ['c','Je crois qu’il ___ venir demain.','va',['va','aille'],'je crois que → Indikativ.'],
+ ['c','Je suis content que tu ___ là.','sois',['sois','es'],'Gefühl → Subjonctif.'],
+ ['c','Je veux ___ avant la nuit.','partir',['partir','que je parte'],'gleiches Subjekt → Grundform.'],
+ ['c','Je parle lentement pour que tu ___.','comprennes',['comprennes','comprends'],'pour que → Subjonctif.'],
+ ['c','Il est certain qu’il ___ en retard.','sera',['sera','soit'],'Gewissheit → Indikativ.'],
+ ['c','J’ai peur qu’il ___ trop tard.','soit',['soit','est'],'Angst → Subjonctif.'],
+ ['c','On part avant qu’il ___.','pleuve',['pleuve','pleut'],'avant que → Subjonctif.'],
+ ['c','Je doute qu’il ___ venir.','puisse',['puisse','peut'],'Zweifel → Subjonctif.'],
+ ['c','Parce qu’il ___ malade, il reste chez lui.','est',['est','soit'],'parce que → Indikativ.']]},
+{id:'indirect',name:'Indirekte Rede',lvl:'B2',
+ text:'Ist das einleitende Verb in der Vergangenheit (il a dit que …), verschieben sich die Zeiten: Präsens → <b>Imparfait</b>, Passé composé → <b>Plus-que-parfait</b>, Futur → <b>Conditionnel</b>. Fragen: est-ce que → <b>si</b>, qu’est-ce que → <b>ce que</b>, qu’est-ce qui → <b>ce qui</b>. Auch Zeitangaben ändern sich: demain → le lendemain, hier → la veille.',
+ ex:[['Il a dit qu’il viendrait.','Er sagte, er würde kommen.'],['Elle m’a demandé si j’avais faim.','Sie fragte mich, ob ich Hunger hätte.'],['Il voulait savoir ce que je faisais.','Er wollte wissen, was ich mache.']],
+ items:[
+ ['c','«Je suis fatigué.» → Il a dit qu’il ___ fatigué.','était',['était','est','serait'],'Präsens → Imparfait.'],
+ ['c','«Je viendrai.» → Elle a dit qu’elle ___.','viendrait',['viendrait','viendra','venait'],'Futur → Conditionnel.'],
+ ['c','«J’ai fini.» → Il a dit qu’il ___ fini.','avait',['avait','a','aurait'],'Passé composé → Plus-que-parfait.'],
+ ['c','«Est-ce que tu viens ?» → Il m’a demandé ___ je venais.','si',['si','que','ce que'],'Ja/Nein-Frage → si.'],
+ ['c','«Qu’est-ce que tu veux ?» → Elle m’a demandé ___ je voulais.','ce que',['ce que','qu’est-ce que','ce qui'],'qu’est-ce que → ce que.'],
+ ['c','«Qu’est-ce qui se passe ?» → Il a demandé ___ se passait.','ce qui',['ce qui','ce que','qu’est-ce qui'],'qu’est-ce qui → ce qui.'],
+ ['c','«Je partirai demain.» → Il a dit qu’il partirait ___.','le lendemain',['le lendemain','demain','la veille'],'demain → le lendemain.'],
+ ['t','«On a vu le maire.» → Ils ont dit qu’ils ___ vu le maire.','avaient','Plus-que-parfait: ils avaient vu.']]},
+{id:'gerondif',name:'Gérondif und Partizip Präsens',lvl:'B2',
+ text:'<b>Gérondif</b> = en + Partizip Präsens (Stamm der nous-Form + -ant): gleichzeitig, Art und Weise, Bedingung. Das Subjekt ist dasselbe wie im Hauptsatz. Unregelmässig: <b>étant, ayant, sachant</b>. Partizip Präsens ohne en ersetzt v. a. schriftlich einen Relativsatz: «les personnes habitant ici».',
+ ex:[['Il chante en travaillant.','Er singt beim Arbeiten.'],['C’est en forgeant qu’on devient forgeron.','Übung macht den Meister.'],['En partant tôt, on évitera les bouchons.','Wenn wir früh fahren, vermeiden wir den Stau.']],
+ items:[
+ ['t','J’ai appris le français en ___ en France. (vivre)','vivant','nous vivons → vivant.'],
+ ['t','Il s’est blessé en ___ du vélo. (faire)','faisant','nous faisons → faisant.'],
+ ['t','En ___ plus tôt, tu aurais eu le train. (partir)','partant','nous partons → partant.'],
+ ['t','On a trouvé la maison en ___ sur Internet. (chercher)','cherchant','cherchant.'],
+ ['t','En ___ patient, tu y arriveras. (être)','étant','être → étant.'],
+ ['t','Il écoute la radio en ___. (manger)','mangeant','g + e vor a: mangeant.'],
+ ['c','Je l’ai rencontré ___ du marché.','en revenant',['en revenant','revenant','en revenir'],'Gérondif = en + -ant.'],]},
+{id:'passif',name:'Passiv',lvl:'B2',
+ text:'Passiv = <b>être</b> (in der passenden Zeit) + Partizip, angeglichen an das Subjekt. Der Handelnde mit <b>par</b>. Im Alltag wird oft mit <b>on</b> umschrieben: «On a refait le toit» statt «Le toit a été refait».',
+ ex:[['Le toit a été refait en 2020.','Das Dach wurde 2020 erneuert.'],['La maison sera vendue.','Das Haus wird verkauft werden.'],['On m’a volé mon vélo.','Man hat mir mein Velo gestohlen.']],
+ items:[
+ ['c','Les fenêtres ___ changées l’année dernière.','ont été',['ont été','ont','sont'],'Passé composé im Passiv: ont été + Partizip.'],
+ ['c','Le projet sera présenté ___ le maire.','par',['par','de','avec'],'Handelnder → par.'],
+ ['c','La route ___ fermée depuis lundi.','est',['est','a','été'],'Zustand → est fermée.'],
+ ['t','La maison a été ___ en 1850. (construire)','construite','la maison → construite.'],
+ ['t','Les travaux seront ___ en mars. (finir)','finis','les travaux → finis.'],
+ ['t','On a réparé la chaudière. → La chaudière ___ réparée.','a été','a été réparée.'],
+ ['t','Le village est ___ par les touristes en été. (envahir)','envahi','le village → envahi.']]},
+{id:'negation',name:'Verneinung',lvl:'B1',
+ text:'ne … <b>plus</b> (nicht mehr), ne … <b>jamais</b> (nie), ne … <b>rien</b> (nichts), ne … <b>personne</b> (niemand), ne … <b>aucun(e)</b> (kein einziger), ne … <b>que</b> (nur), ne … <b>ni … ni</b> (weder … noch). Im Passé composé: ne + Hilfsverb + pas/plus/jamais/rien + Partizip, aber <b>personne</b> und <b>aucun</b> stehen nach dem Partizip. Nach der Verneinung: <b>de</b> statt un/une/des. Gesprochen fällt «ne» meist weg.',
+ ex:[['Je n’ai rien vu.','Ich habe nichts gesehen.'],['Je n’ai vu personne.','Ich habe niemanden gesehen.'],['Il n’y a plus de pain.','Es hat kein Brot mehr.'],['J’sais pas.','Weiss nicht. (gesprochen)']],
+ items:[
+ ['c','Je n’ai ___ vu. (nichts)','rien',['rien','personne','jamais'],'ne … rien.'],
+ ['c','Je n’ai vu ___. (niemanden)','personne',['personne','rien','aucun'],'personne steht nach dem Partizip.'],
+ ['c','Il n’y a plus ___ pain.','de',['de','du','le'],'nach Verneinung: de.'],
+ ['c','On n’a ___ problème.','aucun',['aucun','aucune','pas'],'le problème → aucun.'],
+ ['c','Je n’ai ___ une semaine de vacances. (nur)','qu’',['qu’','pas','plus'],'ne … que = nur.'],
+ ['c','Il ne boit ___ vin ___ bière.','ni … ni',['ni … ni','pas … ou','ne … ne'],'weder … noch.'],
+ ['t','Il ne fume ___. (nicht mehr)','plus','ne … plus.'],
+ ['t','Nous ne sommes ___ allés en Corse. (nie)','jamais','ne … jamais.'],
+ ['t','Je n’ai ___ (keine einzige) idée.','aucune','une idée → aucune.'],
+ ['c','Gesprochen: «Je ne sais pas.» klingt meist so:','J’sais pas.',['J’sais pas.','Je sais.','Je pas sais.'],'Im Alltag fällt ne weg, oft auch das e von je.']]},
+{id:'questions',name:'Fragen in drei Registern',lvl:'B1',
+ text:'Gesprochen: <b>Tu viens d’où ?</b> (Intonation). Neutral: <b>D’où est-ce que tu viens ?</b> Gehoben/schriftlich: <b>D’où viens-tu ?</b> (Inversion). Bei Inversion mit il/elle/on nach Vokal ein -t-: <b>A-t-il fini ?</b> Fragewörter: <b>qu’est-ce qui</b> (was, Subjekt), <b>qu’est-ce que</b> (was, Objekt), <b>quel/quelle</b> (welche/r), <b>lequel</b> (welche/r davon).',
+ ex:[['Tu fais quoi ?','Was machst du? (gesprochen)'],['Qu’est-ce que tu fais ?','Was machst du? (neutral)'],['Que fais-tu ?','Was machst du? (gehoben)']],
+ items:[
+ ['c','___ se passe ?','Qu’est-ce qui',['Qu’est-ce qui','Qu’est-ce que','Quoi'],'was als Subjekt → qu’est-ce qui.'],
+ ['c','___ vous voulez boire ?','Qu’est-ce que',['Qu’est-ce que','Qu’est-ce qui','Quel'],'was als Objekt → qu’est-ce que.'],
+ ['c','___ heure est-il ?','Quelle',['Quelle','Quel','Laquelle'],'l’heure ist weiblich → quelle.'],
+ ['c','Il y a deux routes. ___ est la plus courte ?','Laquelle',['Laquelle','Quelle','Lequel'],'welche davon (la route) → laquelle.'],
+ ['c','Gehoben: ___ fini ?','A-t-il',['A-t-il','A-il','Il a-t-'],'Inversion mit -t-.'],
+ ['c','Gehoben: Où ___ ?','habitez-vous',['habitez-vous','vous habitez-vous','est-ce vous habitez'],'Inversion: habitez-vous.'],
+ ['t','Neutral mit est-ce que: ___ tu viens ce soir ? (Ja/Nein)','Est-ce que','Ja/Nein-Frage: Est-ce que …'],
+ ['t','Gesprochen: Tu pars ___ ? (wann)','quand','Fragewort am Ende: Tu pars quand ?'],
+ ['c','___ tu as choisi ? (welches der Häuser)','Laquelle',['Laquelle','Lequel','Quelle'],'la maison → laquelle.']]},
+{id:'connecteurs',name:'Verbindungswörter: Grund, Folge, Zweck, Gegensatz',lvl:'B2',
+ text:'Grund: <b>parce que</b> (neutral), <b>puisque</b> (bekannter Grund), <b>comme</b> (am Satzanfang), <b>grâce à</b> (positiv), <b>à cause de</b> (negativ). Folge: <b>donc, alors, du coup</b> (gesprochen), <b>c’est pourquoi, si bien que</b>. Zweck: <b>pour / afin de</b> + Grundform, <b>pour que / afin que</b> + Subjonctif. Gegensatz: <b>mais, pourtant, cependant, alors que, même si</b> (+ Indikativ), <b>bien que</b> (+ Subjonctif), <b>malgré</b> + Nomen.',
+ ex:[['Comme il pleuvait, on est restés.','Da es regnete, blieben wir.'],['Malgré la pluie, on est sortis.','Trotz des Regens gingen wir hinaus.'],['Même s’il pleut, on y va.','Auch wenn es regnet, gehen wir.']],
+ items:[
+ ['c','___ il faisait chaud, on a mangé dehors.','Comme',['Comme','Parce que','Donc'],'Grund am Satzanfang → comme.'],
+ ['c','On a raté le train ___ des bouchons.','à cause',['à cause','grâce','parce'],'negativer Grund + Nomen → à cause des.'],
+ ['c','On a trouvé un bon artisan ___ nos voisins.','grâce à',['grâce à','à cause de','malgré'],'positiver Grund → grâce à.'],
+ ['c','___ la pluie, on a fait la randonnée.','Malgré',['Malgré','Bien que','Même si'],'+ Nomen → malgré.'],
+ ['c','Bien qu’il ___ tard, il est venu.','soit',['soit','est','était'],'bien que + Subjonctif.'],
+ ['c','Même s’il ___, on ira.','pleut',['pleut','pleuve'],'même si + Indikativ.'],
+ ['c','Je t’explique ___ tu comprennes.','pour que',['pour que','pour','afin de'],'anderes Subjekt → pour que + Subjonctif.'],
+ ['c','Il a beaucoup travaillé, ___ il est fatigué.','du coup',['du coup','pourtant','malgré'],'Folge → du coup (gesprochen).'],
+ ['c','Il est riche, ___ il vit simplement.','pourtant',['pourtant','donc','puisque'],'Gegensatz → pourtant.'],
+ ['c','___ tu es là, aide-moi !','Puisque',['Puisque','Pourtant','Bien que'],'bekannter Grund → puisque.']]},
+{id:'comparaison',name:'Vergleiche: plus, moins, mieux, meilleur',lvl:'B1',
+ text:'<b>plus / moins / aussi … que</b> bei Adjektiven und Adverbien, <b>plus de / moins de / autant de</b> bei Nomen. Unregelmässig: bon → <b>meilleur</b> (Adjektiv), bien → <b>mieux</b> (Adverb). Superlativ: <b>le plus / la moins …</b>, <b>le meilleur</b>, <b>le mieux</b>.',
+ ex:[['Ce vin est meilleur que l’autre.','Dieser Wein ist besser als der andere.'],['Il cuisine mieux que moi.','Er kocht besser als ich.'],['Il y a plus de touristes en août.','Im August hat es mehr Touristen.']],
+ items:[
+ ['c','Ce fromage est ___ que celui d’hier.','meilleur',['meilleur','mieux','plus bon'],'bon → meilleur.'],
+ ['c','Tu parles ___ français que moi.','mieux',['mieux','meilleur'],'Adverb (wie?) → mieux.'],
+ ['c','Il y a ___ monde qu’hier.','plus de',['plus de','plus','plus du'],'+ Nomen → plus de.'],
+ ['c','C’est la ___ solution.','meilleure',['meilleure','mieux','plus bonne'],'la solution → meilleure.'],
+ ['c','Ça va ___ aujourd’hui ?','mieux',['mieux','meilleur'],'aller bien → aller mieux.'],
+ ['c','Il fait ___ chaud qu’à Berne.','aussi',['aussi','autant','si'],'Adjektiv → aussi … que.'],
+ ['c','On a ___ de travail que l’an dernier.','autant',['autant','aussi','tant'],'+ Nomen → autant de.'],
+ ['t','C’est le village le ___ joli de la région. (Superlativ)','plus','le plus joli.']]},
+{id:'oral',name:'So spricht man wirklich',lvl:'B2',
+ text:'Im gesprochenen Französisch: <b>ne</b> fällt weg (je sais pas), <b>on</b> statt nous (on y va), <b>ça</b> statt cela, <b>il y a</b> → «y a», <b>il faut</b> → «faut», <b>tu as</b> → «t’as», Fragen mit Intonation (tu viens ?), Betonung mit <b>moi, je …</b> und Herausstellung «Ce village, je l’adore». Füllwörter: <b>du coup, en fait, bon, ben, quoi, genre, tu vois</b>.',
+ ex:[['T’as vu ça ?','Hast du das gesehen?'],['Faut qu’on y aille.','Wir müssen los.'],['Moi, j’adore ce village.','Ich, ich liebe dieses Dorf.'],['Bon ben… on y va ?','Also dann … gehen wir?']],
+ items:[
+ ['c','«Nous allons au marché.» gesprochen:','On va au marché.',['On va au marché.','Nous va au marché.','On allons au marché.'],'on + 3. Person Singular.'],
+ ['c','«Il n’y a pas de problème.» gesprochen:','Y a pas de problème.',['Y a pas de problème.','Il a pas problème.','Y a pas problème.'],'il y a → y a, ne fällt weg, de bleibt.'],
+ ['c','«Tu as vu ?» gesprochen:','T’as vu ?',['T’as vu ?','Tu’as vu ?','T’a vu ?'],'tu as → t’as.'],
+ ['c','«Il faut partir.» gesprochen:','Faut partir.',['Faut partir.','Il faut part.','Faudrait partir.'],'il faut → faut.'],
+ ['c','Was heisst «du coup» meistens?','also / deshalb',['also / deshalb','plötzlich','auf einmal'],'du coup = also, folglich.'],
+ ['c','«Ce village, je l’adore.» betont …','den Ort (Herausstellung)',['den Ort (Herausstellung)','mich','die Vergangenheit'],'Herausstellung nach vorne, mit Pronomen wieder aufgenommen.'],
+ ['c','«Je ne sais pas.» gesprochen klingt meist wie:','Chais pas.',['Chais pas.','Je sé.','Ne sais.'],'je sais pas → «chais pas».'],
+ ['t','Schreibe gesprochen ohne ne: Je ne comprends pas. → ___','Je comprends pas.|Je comprends pas','ne fällt weg.']]}
+];
+
+// ===== Ça repart ! – Französisch auffrischen =====
+const KEY='ca-repart-v1',DAY=864e5,INT=[0,1,3,7,16,35,80];
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick1=a=>a[Math.floor(Math.random()*a.length)];
+const today=()=>new Date().toISOString().slice(0,10);
+
+// ---- Inhalte vorbereiten
+const ORDER=(()=>{const by={};THEMES.forEach(t=>(by[t.area]=by[t.area]||[]).push(t));const out=[];for(let k=0;k<10;k++)AREAS.forEach(a=>by[a.id]&&by[a.id][k]&&out.push(by[a.id][k]));return out})();
+const VOC=THEMES.flatMap(t=>t.items.map((x,i)=>({id:'v:'+t.id+':'+i,type:'v',theme:t.id,area:t.area,fr:x[0],de:x[1],note:x[2]||''})));
+const GIT=GRAM.flatMap(u=>u.items.map((x,i)=>x[0]==='c'?{id:'g:'+u.id+':'+i,type:'g',unit:u.id,kind:'c',prompt:x[1],answer:x[2],options:x[3],why:x[4]}:{id:'g:'+u.id+':'+i,type:'g',unit:u.id,kind:'t',prompt:x[1],answer:x[2].split('|')[0],accept:x[2].split('|'),why:x[3]}));
+const ALL=[...VOC,...GIT],BY=Object.fromEntries(ALL.map(i=>[i.id,i]));
+const themeOf=id=>THEMES.find(t=>t.id===id),unitOf=id=>GRAM.find(u=>u.id===id);
+
+// ---- Zustand
+const blank=()=>({items:{},days:{},sessions:0,units:{},rate:0.95,updatedAt:0});
+let S=blank(),store='local',R=null,view='home',sub=null,bkMsg='',bkCode='',TEST=false;
+function localOK(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true}catch(e){return false}}
+function loadLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.items)S={...blank(),...x}}catch(e){}}
+function mergeStore(a={},b={}){const o={...a};for(const k in b){if(!o[k]||(b[k].seen||0)>(o[k].seen||0)||((b[k].seen||0)===(o[k].seen||0)&&(b[k].next||0)>(o[k].next||0)))o[k]=b[k]}return o}
+function merge(a,b){const d={...a.days};for(const k in b.days||{})d[k]=Math.max(d[k]||0,b.days[k]);
+ return{...blank(),...a,items:mergeStore(a.items,b.items),days:d,units:{...(b.units||{}),...(a.units||{})},sessions:Math.max(a.sessions||0,b.sessions||0),rate:a.updatedAt>=(b.updatedAt||0)?a.rate:b.rate,updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0)}}
+function save(){if(TEST)return;S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}ghPush()}
+
+// ---- Sprachausgabe
+let voice=null;function pickVoice(){const v=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang));voice=v.find(v=>/fr-FR/i.test(v.lang)&&/google|amélie|thomas|audrey|marie|natural/i.test(v.name))||v.find(v=>/fr-FR/i.test(v.lang))||v[0]||null}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function speak(t,slow){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/…/g,'').replace(/\//g,','));u.lang='fr-FR';if(voice)u.voice=voice;u.rate=(S.rate||0.95)*(slow?0.75:1);speechSynthesis.speak(u)}catch(e){}}
+
+// ---- Vergleich getippter Antworten
+const norm=s=>s.toLowerCase().replace(/[’`´]/g,"'").replace(/…|\.\.\./g,'').replace(/\s+([?!:;])/g,'$1').replace(/[.!?]+$/,'').replace(/\s+/g,' ').trim();
+const noAcc=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/œ/g,'oe');
+function check(input,accepts){const a=norm(input);if(!a)return{ok:false};
+ for(const x of accepts)if(norm(x)===a)return{ok:true};
+ for(const x of accepts)if(noAcc(norm(x))===noAcc(a))return{ok:true,acc:true};
+ return{ok:false,close:accepts.some(x=>lev(noAcc(norm(x)),noAcc(a))<=Math.max(1,Math.floor(norm(x).length/12)))}}
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return m[a.length][b.length]}
+
+// ---- Ablenker, die man nicht einfach ausschliessen kann
+const artOf=t=>{const m=t.match(/^(un|une|le|la|les|des|l’|mon|ma|ein|eine|einen|der|die|das)\b/i);return m?m[1].toLowerCase():''};
+const wc=t=>t.split(' ').length;
+function sim(a,b,k){const x=a[k],y=b[k];let s=0;if(a.theme===b.theme)s+=4;else if(a.area===b.area)s+=1.5;
+ if(artOf(x)===artOf(y))s+=2;s-=Math.min(4,Math.abs(wc(x)-wc(y)));s-=Math.abs(x.length-y.length)/5;
+ if(/[?.!]$/.test(x)===/[?.!]$/.test(y))s+=1.5;if(x.slice(-2)===y.slice(-2))s+=.5;return s+Math.random()*1.5}
+function distract(item,k,n){const seen=new Set([item[k]]),out=[];
+ for(const {i} of VOC.filter(i=>i.id!==item.id).map(i=>({i,s:sim(item,i,k)})).sort((a,b)=>b.s-a.s)){if(out.length>=n)break;if(seen.has(i[k]))continue;seen.add(i[k]);out.push(i[k])}return out}
+
+// ---- Wiederholung (Leitner)
+const st=id=>S.items[id];
+const isDue=id=>{const x=st(id);return x&&x.seen&&x.next<=Date.now()};
+function grade(item,ok,production){const x=S.items[item.id]||{box:0,seen:0,next:0,ok:0,bad:0};const first=!x.seen;
+ if(ok){x.box=first&&production?2:Math.min(6,(x.box||0)+1);x.ok=(x.ok||0)+1}else{x.box=1;x.bad=(x.bad||0)+1}
+ x.seen=(x.seen||0)+1;x.next=Date.now()+INT[x.box]*DAY-36e5;S.items[item.id]=x;
+ const d=today();S.days[d]=(S.days[d]||0)+1}
+
+// ---- Aufgaben
+function vocTask(item,mode){const x=st(item.id)||{box:0};
+ if(!mode){const opts=x.box<=1?['type','type','listen']:['type','listen','speak','pick'];mode=pick1(opts);if(mode==='listen'&&wc(item.fr)>9)mode='type'}
+ if(mode==='recog')return{item,kind:'mc',tag:'Verstehen',ask:'Was bedeutet das?',prompt:item.fr,say:item.fr,answer:item.de,options:shuffle([item.de,...distract(item,'de',3)])};
+ if(mode==='pick')return{item,kind:'mc',tag:'Erkennen',ask:'Wie sagt man das auf Französisch?',prompt:item.de,answer:item.fr,options:shuffle([item.fr,...distract(item,'fr',3)]),sayAfter:true,prod:false};
+ if(mode==='listen')return{item,kind:'type',tag:'Hören',ask:'Hör zu und schreib, was du hörst.',prompt:'',say:item.fr,auto:true,answer:item.fr,accept:[item.fr],sub:'',prod:true};
+ if(mode==='speak')return{item,kind:'speak',tag:'Sprechen',ask:'Sag es laut auf Französisch. Dann vergleiche.',prompt:item.de,answer:item.fr,prod:true};
+ return{item,kind:'type',tag:'Schreiben',ask:'Wie sagt man das auf Französisch?',prompt:item.de,answer:item.fr,accept:[item.fr],hint:x.box<=1&&(x.bad||0)>0?item.fr.slice(0,Math.ceil(item.fr.length/3))+'…':'',prod:true}}
+function gramTask(item){const u=unitOf(item.unit);
+ if(item.kind==='c')return{item,kind:'mc',tag:'Grammatik · '+u.name,ask:'Was passt?',prompt:item.prompt,answer:item.answer,options:shuffle(item.options),why:item.why};
+ return{item,kind:'type',tag:'Grammatik · '+u.name,ask:'Ergänze.',prompt:item.prompt,answer:item.answer,accept:item.accept,why:item.why,gap:true,prod:true}}
+const taskFor=(item,mode)=>item.type==='v'?vocTask(item,mode):gramTask(item);
+
+// ---- Sitzung zusammenstellen
+const inFocus=(i,f)=>!f||f==='mix'||(f.startsWith('area:')&&i.type==='v'&&i.area===f.slice(5))||(f.startsWith('theme:')&&i.theme===f.slice(6))||(f==='gram'&&i.type==='g')||(f.startsWith('unit:')&&i.unit===f.slice(5));
+function freshList(f){const vt=ORDER.filter(t=>inFocus({type:'v',area:t.area,theme:t.id},f)),ut=GRAM.filter(u=>inFocus({type:'g',unit:u.id},f));
+ const firstOpen=(arr,key)=>{for(const g of arr){const its=ALL.filter(i=>i[key]===g.id&&!st(i.id));if(its.length)return its}return[]};
+ // zwei offene Wortschatz-Themen gleichzeitig, damit es abwechslungsreich bleibt
+ let v=[];const open=vt.map(t=>VOC.filter(i=>i.theme===t.id&&!st(i.id))).filter(a=>a.length).slice(0,2);
+ for(let k=0;k<12;k++)open.forEach(a=>a[k]&&v.push(a[k]));
+ return{v,g:firstOpen(ut,'unit')}}
+function buildSession(f,size=15){const due=ALL.filter(i=>inFocus(i,f)&&isDue(i.id)).sort((a,b)=>st(a.id).next-st(b.id).next);
+ const nDue=Math.min(due.length,f==='mix'||!f?10:size);const fr=freshList(f);let nNew=Math.min(size-nDue,10);
+ const nv=f&&f.startsWith('unit:')?0:f==='gram'?0:f&&(f.startsWith('theme:')||f.startsWith('area:'))?nNew:Math.ceil(nNew/2);
+ const newV=fr.v.slice(0,nv),newG=fr.g.slice(0,nNew-newV.length);
+ const fill=size-nDue-newV.length-newG.length;const extra=fill>0?due.slice(nDue,nDue+fill):[];
+ const old=shuffle([...due.slice(0,nDue),...extra]).map(i=>taskFor(i));
+ const tasks=[];
+ // neue Grammatik: zuerst die Regel zeigen
+ const units=[...new Set(newG.map(i=>i.unit))];
+ const newTasks=[];units.forEach(u=>{if(!S.units[u])newTasks.push({kind:'rule',unit:u,tag:'Neue Regel'});newG.filter(i=>i.unit===u).forEach(i=>newTasks.push(gramTask(i)))});
+ newV.forEach(i=>newTasks.push(vocTask(i,'recog')));
+ // mischen: neue und alte abwechselnd, neue Wörter später noch einmal schreiben
+ let a=0,b=0;while(a<newTasks.length||b<old.length){if(a<newTasks.length){const t=newTasks[a++];tasks.push(t);if(t.kind==='rule'){while(a<newTasks.length&&newTasks[a].item&&newTasks[a].item.unit===t.unit&&tasks.filter(x=>x.item&&x.item.unit===t.unit).length<2)tasks.push(newTasks[a++])}}if(b<old.length)tasks.push(old[b++])}
+ newV.forEach((i,k)=>{const pos=Math.min(tasks.length,tasks.findIndex(t=>t.item===i)+4+k);tasks.splice(pos,0,{...vocTask(i,'type'),second:true})});
+ return tasks}
+
+// ---- Runde
+function start(f){let tasks=buildSession(f);if(!tasks.length&&f&&f!=='mix'){const pool=ALL.filter(i=>inFocus(i,f));tasks=shuffle(pool).slice(0,15).map(i=>taskFor(i))}if(!tasks.length){sub='nothing';return render()}R={f,tasks,i:0,ok:0,done:0,wrong:[],t0:Date.now(),state:'ask'};view='round';render();autoSay()}
+function cur(){return R&&R.tasks[R.i]}
+function autoSay(){const t=cur();if(t&&(t.auto||t.kind==='mc'&&t.say))setTimeout(()=>speak(t.say||t.answer),250)}
+function answer(ok,extra={}){const t=cur();if(R.state!=='ask')return;R.state='fb';R.last={ok,...extra};
+ if(t.item&&!t.second)grade(t.item,ok,!!t.prod);else if(t.item&&t.second){const x=S.items[t.item.id];if(ok){x.box=Math.max(x.box,2);x.next=Date.now()+INT[x.box]*DAY-36e5}else{x.box=1;x.next=Date.now()}}
+ if(ok)R.ok++;else R.wrong.push(t);R.done++;save();render();
+ if(t.item&&t.item.type==='v'&&(t.kind!=='mc'||t.sayAfter||!t.say))speak(t.item.fr);else if(t.item&&t.item.type==='g'&&ok)speak(fillGap(t.item))}
+function fixTypo(){const t=cur();R.ok++;R.wrong=R.wrong.filter(x=>x!==t);if(t.item&&!t.second){const x=S.items[t.item.id];x.box=Math.min(6,(x.box||1)+(x.seen>1?0:1));x.bad=Math.max(0,(x.bad||1)-1);x.next=Date.now()+INT[x.box]*DAY-36e5}R.last={ok:true,typo:true};save();render()}
+function next(){R.i++;R.state='ask';R.last=null;if(R.i>=R.tasks.length){S.sessions++;save();view='done'}render();autoSay()}
+const fillGap=it=>!it.prompt.includes('___')?it.answer:it.prompt.replace(/\s*\([^)]*\)\s*$/,'').replace(/\s*\([^)]*\)/,'').replace('___',it.answer).replace(/^.*→\s*/,'');
+
+// ---- Ansichten
+const AREA_ICON={talk:'💬',trip:'🧺',home:'🔨',news:'📰'};
+function progressOf(list){const n=list.length,s=list.filter(i=>st(i.id)).length,m=list.filter(i=>(st(i.id)?.box||0)>=4).length;return{n,s,m}}
+function streak(){let n=0,d=new Date();for(;;){const k=d.toISOString().slice(0,10);if(S.days[k])n++;else if(n||k!==today())break;d=new Date(d-DAY);if(n>999)break}return n}
+function bar(p){return `<div class="bar"><i style="width:${p.n?Math.round(p.s/p.n*100):0}%"></i><b style="width:${p.n?Math.round(p.m/p.n*100):0}%"></b></div>`}
+function render(){document.body.dataset.view=view;
+ const nav=`<nav class="tabs">${[['home','Heute'],['gram','Grammatik'],['vocab','Wörter'],['settings','Optionen']].map(([k,l])=>`<button data-v="${k}" class="${view===k?'on':''}">${l}</button>`).join('')}</nav>`;
+ const head=`<header class="top"><img src="${ICON}" alt=""><div><h1>Ça repart !</h1><p>Französisch auffrischen</p></div></header>`;
+ let h='';
+ if(view==='round')h=roundHTML();else if(view==='done')h=doneHTML();
+ else h=head+nav+(view==='home'?homeHTML():view==='gram'?gramHTML():view==='vocab'?vocabHTML():settingsHTML());
+ app.innerHTML=h;bind()}
+function homeHTML(){const due=ALL.filter(i=>isDue(i.id)).length,seen=ALL.filter(i=>st(i.id)).length,sure=ALL.filter(i=>(st(i.id)?.box||0)>=4).length,sk=streak(),td=S.days[today()]||0;
+ const fv=sub&&sub.startsWith('focus:')?sub.slice(6):'mix';
+ const opts=[['mix','Alles gemischt (empfohlen)'],['gram','Nur Grammatik'],...AREAS.map(a=>['area:'+a.id,'Nur '+a.name])];
+ return `<section class="card hero"><h2>${td?'Weiter geht’s':'Bonjour Fabian !'}</h2>
+ <p>Eine Runde dauert etwa 8 bis 10 Minuten: zuerst, was heute fällig ist, dann neue Wörter und eine Regel.</p>
+ <label class="sel">Schwerpunkt <select id="focus">${opts.map(([k,l])=>`<option value="${k}" ${fv===k?'selected':''}>${l}</option>`).join('')}</select></label>
+ <button class="big" id="go">Runde starten</button>${sub==='nothing'?'<p class="note">In diesem Bereich ist gerade nichts fällig und alles schon begonnen. Wähle einen anderen Schwerpunkt.</p>':''}
+ <p class="note">${saveNote()}</p></section>
+ <section class="stats"><div><b>${due}</b><span>heute fällig</span></div><div><b>${seen}</b><span>begonnen</span></div><div><b>${sure}</b><span>sitzen</span></div><div><b>${sk}</b><span>${sk===1?'Tag':'Tage'} in Folge</span></div></section>
+ <section class="card"><h3>So funktioniert es</h3><ul class="how"><li>Was du sicher weisst, kommt erst nach Tagen oder Wochen wieder. Was nicht sitzt, kommt bald zurück.</li><li>Du schreibst und sprichst viel selbst. Aktives Erinnern bringt eingerostetes Französisch am schnellsten zurück.</li><li>Kennst du ein neues Wort auf Anhieb, überspringt es gleich eine Stufe.</li><li>Ein Tippfehler? Tippe danach auf «War nur ein Tippfehler».</li></ul></section>`}
+function saveNote(){return store==='github'?'Dein Fortschritt wird automatisch online gespeichert.':store==='local'?'Dein Fortschritt wird nur auf diesem Gerät gespeichert. Unter «Optionen» kannst du den Online-Speicher verbinden.':'Dieser Browser speichert nichts. Unter «Optionen» findest du die Sicherung.'}
+function gramHTML(){if(sub&&sub.startsWith('unit:'))return unitHTML(unitOf(sub.slice(5)));
+ return `<section class="card"><h3>Grammatik B1 → B2</h3><p class="note">Die Regeln kommen in den Runden der Reihe nach dran. Du kannst jede Einheit auch ansehen und gezielt üben.</p>
+ <ul class="list">${GRAM.map(u=>{const p=progressOf(GIT.filter(i=>i.unit===u.id));return `<li><button class="row" data-unit="${u.id}"><span><b>${esc(u.name)}</b><small>${u.lvl} · ${p.s} von ${p.n} geübt · ${p.m} sitzen</small>${bar(p)}</span><i>›</i></button></li>`}).join('')}</ul></section>`}
+function unitHTML(u){const p=progressOf(GIT.filter(i=>i.unit===u.id));
+ return `<section class="card"><button class="back" data-back="gram">‹ Alle Einheiten</button><h2>${esc(u.name)}</h2><p class="lvl">${u.lvl} · ${p.s} von ${p.n} geübt</p>
+ <div class="rule">${u.text}</div><h3>Beispiele</h3><ul class="ex">${u.ex.map(([f,d])=>`<li><button class="say" data-say="${esc(f)}" aria-label="Vorlesen">🔊</button><span><b>${esc(f)}</b><small>${esc(d)}</small></span></li>`).join('')}</ul>
+ <div class="actions"><button class="big" data-start="unit:${u.id}">Diese Einheit üben</button></div></section>`}
+function vocabHTML(){if(sub&&sub.startsWith('theme:'))return themeHTML(themeOf(sub.slice(6)));
+ return AREAS.map(a=>`<section class="card"><h3>${AREA_ICON[a.id]} ${esc(a.name)}</h3><ul class="list">${THEMES.filter(t=>t.area===a.id).map(t=>{const p=progressOf(VOC.filter(i=>i.theme===t.id));return `<li><button class="row" data-theme="${t.id}"><span><b>${esc(t.name)}</b><small>${p.s} von ${p.n} geübt · ${p.m} sitzen</small>${bar(p)}</span><i>›</i></button></li>`}).join('')}</ul><div class="actions"><button class="plain" data-start="area:${a.id}">Nur diesen Bereich üben</button></div></section>`).join('')}
+function themeHTML(t){const its=VOC.filter(i=>i.theme===t.id);
+ return `<section class="card"><button class="back" data-back="vocab">‹ Alle Themen</button><h2>${esc(t.name)}</h2><p class="lvl">${its.length} Wörter und Wendungen</p>
+ <ul class="ex">${its.map(i=>{const b=st(i.id)?.box||0;return `<li><button class="say" data-say="${esc(i.fr)}" aria-label="Vorlesen">🔊</button><span><b>${esc(i.fr)}</b><small>${esc(i.de)}${i.note?' · <em>'+esc(i.note)+'</em>':''}</small></span><i class="dot b${Math.min(b,4)}" title="Stufe ${b}"></i></li>`}).join('')}</ul>
+ <div class="actions"><button class="big" data-start="theme:${t.id}">Dieses Thema üben</button></div></section>`}
+function settingsHTML(){return `<section class="card"><h3>Sprechtempo</h3><p class="note">So schnell liest die Stimme vor.</p>
+ <div class="seg">${[[0.8,'Langsam'],[0.95,'Normal'],[1.1,'Schnell']].map(([v,l])=>`<button data-rate="${v}" class="${Math.abs((S.rate||.95)-v)<.01?'on':''}">${l}</button>`).join('')}</div>
+ <button class="plain" id="testVoice" style="margin-top:10px">Probe hören</button></section>
+ <section class="card">${ghHTML()}</section>
+ <section class="card"><h3>Sicherung</h3><p class="note">Ein Code mit deinem ganzen Fortschritt, zum Aufbewahren oder für ein anderes Gerät ohne Online-Speicher.</p>
+ <textarea id="bkText" rows="3" placeholder="Sicherungscode hier einfügen">${esc(bkCode)}</textarea>
+ <div class="actions"><button class="plain" id="bkCopy">Code erstellen und kopieren</button><button class="plain" id="bkLoad">Code wiederherstellen</button></div>${bkMsg?`<p class="fb ok">${esc(bkMsg)}</p>`:''}</section>
+ <section class="card"><h3>Neu beginnen</h3><p class="note">Löscht deinen Fortschritt auf diesem Gerät und im Online-Speicher.</p>
+ ${sub==='reset'?`<div class="actions"><button class="danger" id="resetYes">Ja, alles löschen</button><button class="plain" id="resetNo">Abbrechen</button></div>`:`<button class="plain" id="resetAsk">Fortschritt zurücksetzen</button>`}</section>
+ <p class="foot">${ALL.length} Übungen: ${VOC.length} Wörter und Wendungen in ${THEMES.length} Themen, ${GIT.length} Grammatikaufgaben in ${GRAM.length} Einheiten.</p>`}
+
+function roundHTML(){const t=cur(),n=R.tasks.length;const top=`<div class="rtop"><button class="x" id="quit" aria-label="Beenden">✕</button><div class="prog"><i style="width:${R.i/n*100}%"></i></div><span>${R.i+1}/${n}</span></div>`;
+ if(t.kind==='rule'){const u=unitOf(t.unit);return top+`<section class="task"><p class="tag">Neue Regel</p><h2>${esc(u.name)}</h2><div class="rule">${u.text}</div><ul class="ex">${u.ex.map(([f,d])=>`<li><button class="say" data-say="${esc(f)}">🔊</button><span><b>${esc(f)}</b><small>${esc(d)}</small></span></li>`).join('')}</ul><div class="actions"><button class="big" id="ruleOk">Verstanden</button></div></section>`}
+ const fb=R.state==='fb';const L=R.last||{};
+ let body='';const prompt=t.prompt?`<p class="prompt ${t.item.type==='g'?'gp':''}">${esc(t.prompt).replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')}</p>`:'';
+ const sayBtn=t.say?`<div class="sayrow"><button class="plain" id="sayAgain">🔊 Nochmal</button><button class="plain" id="saySlow">🐢 Langsam</button></div>`:'';
+ if(t.kind==='mc')body=prompt+sayBtn+`<div class="opts">${t.options.map((o,k)=>`<button class="opt ${fb?(o===t.answer?'right':o===L.pick?'wrong':'dim'):''}" data-opt="${k}" ${fb?'disabled':''}>${esc(o)}</button>`).join('')}</div>`;
+ if(t.kind==='type')body=prompt+sayBtn+`<input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${t.gap?'Fehlendes Wort …':'Auf Französisch …'}" value="${esc(L.input||'')}" ${fb?'disabled':''}>`+(fb?'':`<div class="acc">${'é è ê à â ç ù û î ï ô œ ë ’'.split(' ').map(c=>`<button data-acc="${c}">${c}</button>`).join('')}</div>`)+(t.hint&&!fb?`<p class="note">Tipp: ${esc(t.hint)}</p>`:'');
+ if(t.kind==='speak')body=prompt+(R.state==='ask'&&!R.reveal?'':`<p class="answer">${esc(t.answer)}</p><div class="sayrow"><button class="plain" id="sayAns">🔊 Nochmal hören</button></div>`);
+ let foot='';
+ if(!fb){if(t.kind==='type')foot=`<button class="big" id="check">Prüfen</button><button class="ghost" id="dunno">Weiss ich nicht</button>`;
+  if(t.kind==='speak')foot=R.reveal?`<p class="note">Hast du es richtig gesagt?</p><div class="two"><button class="big" id="spYes">Ja</button><button class="big alt" id="spNo">Nicht ganz</button></div>`:`<button class="big" id="reveal">Antwort zeigen</button>`}
+ else{const ok=L.ok;const it=t.item;
+  let msg=ok?(L.typo?'Gut, zählt als richtig.':L.acc?'Richtig – achte auf die Akzente:':pick1(['Richtig!','Genau.','Très bien !','Parfait.','Exactement.'])):(L.close?'Fast. Richtig ist:':'Nicht ganz. Richtig ist:');
+  let detail='';if(it.type==='v')detail=`<b>${esc(it.fr)}</b><small>${esc(it.de)}${it.note?' · '+esc(it.note):''}</small>`;
+  else detail=`<b>${esc(fillGap(it))}</b>${t.why?`<small>${esc(t.why)}</small>`:''}`;
+  if(ok&&!L.acc&&it.type==='v'&&t.kind==='mc'&&!t.sayAfter)detail=`<b>${esc(it.fr)}</b><small>${esc(it.de)}</small>`;
+  foot=`<div class="fb ${ok?'ok':'no'}"><p>${msg}</p>${detail}</div>${!ok&&t.kind==='type'&&L.input?`<button class="ghost" id="typo">War nur ein Tippfehler</button>`:''}<button class="big" id="next">Weiter</button>`}
+ return top+`<section class="task"><p class="tag">${esc(t.second?'Nochmal – jetzt selbst schreiben':t.tag)}</p><h2 class="ask">${esc(t.ask)}</h2>${body}</section><div class="foot-act">${foot}</div>`}
+function doneHTML(){const n=R.done,ok=R.ok,min=Math.max(1,Math.round((Date.now()-R.t0)/6e4));
+ const w=[...new Map(R.wrong.filter(t=>t.item).map(t=>[t.item.id,t.item])).values()];
+ return `<section class="card hero"><h2>${ok/n>=.8?'Super Runde!':ok/n>=.5?'Gut gemacht!':'Dranbleiben lohnt sich!'}</h2><p>${ok} von ${n} richtig · ${min} ${min===1?'Minute':'Minuten'}</p>
+ ${w.length?`<h3>Das kommt bald wieder</h3><ul class="ex">${w.map(i=>`<li><button class="say" data-say="${esc(i.type==='v'?i.fr:fillGap(i))}">🔊</button><span><b>${esc(i.type==='v'?i.fr:fillGap(i))}</b><small>${esc(i.type==='v'?i.de:i.why||'')}</small></span></li>`).join('')}</ul>`:''}
+ <div class="actions"><button class="big" id="again">Noch eine Runde</button><button class="plain" id="home">Fertig für heute</button></div><p class="note">${saveNote()}</p></section>`}
+
+// ---- Ereignisse
+function bind(){app.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;sub=null;bkMsg='';render();scrollTo(0,0)});
+ app.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{sub='unit:'+b.dataset.unit;render();scrollTo(0,0)});
+ app.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{sub='theme:'+b.dataset.theme;render();scrollTo(0,0)});
+ app.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{sub=null;render()});
+ app.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(b.dataset.start));
+ app.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say));
+ app.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>{S.rate=+b.dataset.rate;save();render();speak('Bonjour, ça va ?')});
+ const on=(id,f)=>{const e=app.querySelector('#'+id);if(e)e.onclick=f};
+ const fs=$('#focus');if(fs)fs.onchange=()=>{sub='focus:'+fs.value};
+ on('go',()=>start(fs?fs.value:'mix'));on('testVoice',()=>speak('Bonjour ! On se voit demain au marché ?'));
+ on('quit',()=>{if(R.done)S.sessions++;R=null;view='home';sub=null;save();render()});
+ on('ruleOk',()=>{S.units[cur().unit]=1;save();next()});
+ on('sayAgain',()=>speak(cur().say));on('saySlow',()=>speak(cur().say,true));on('sayAns',()=>speak(cur().answer));
+ app.querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{const t=cur(),o=t.options[+b.dataset.opt];answer(o===t.answer,{pick:o})});
+ const inp=$('#inp');if(inp&&R&&R.state==='ask'){setTimeout(()=>inp.focus(),50);inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();doCheck()}}}
+ app.querySelectorAll('[data-acc]').forEach(b=>{b.onmousedown=e=>e.preventDefault();b.onclick=()=>{const i=$('#inp');const s=i.selectionStart??i.value.length,e=i.selectionEnd??s;i.value=i.value.slice(0,s)+b.dataset.acc+i.value.slice(e);i.focus();i.setSelectionRange(s+1,s+1)}});
+ on('check',doCheck);on('dunno',()=>answer(false,{input:''}));on('typo',fixTypo);
+ on('reveal',()=>{R.reveal=true;render();speak(cur().answer)});on('spYes',()=>{R.reveal=false;answer(true)});on('spNo',()=>{R.reveal=false;answer(false)});
+ on('next',next);on('again',()=>start(R.f));on('home',()=>{R=null;view='home';render()});
+ on('bkCopy',()=>{bkCode=btoa(unescape(encodeURIComponent(JSON.stringify(S))));const ok=()=>{bkMsg='Der Code ist kopiert. Er steht auch im Feld oben.';render()};try{navigator.clipboard.writeText(bkCode).then(ok,ok)}catch(e){ok()}});
+ on('bkLoad',()=>{try{const d=JSON.parse(decodeURIComponent(escape(atob($('#bkText').value.replace(/\s+/g,'')))));if(!d||!d.items)throw 0;S=merge(S,d);save();bkCode='';bkMsg='Die Sicherung ist wiederhergestellt: '+Object.keys(S.items).length+' geübte Einträge.'}catch(e){bkMsg='Dieser Code ist ungültig. Kopiere ihn vollständig und versuche es noch einmal.'}render()});
+ on('resetAsk',()=>{sub='reset';render()});on('resetNo',()=>{sub=null;render()});on('resetYes',()=>{const r=S.rate;S=blank();S.rate=r;S.updatedAt=Date.now();save();sub=null;view='home';render()});
+ on('ghOn',()=>{const v=$('#ghTok').value;if(v.trim())ghConnect(v)});on('ghOff',ghOff);
+ on('pinAsk',()=>{pinMode=true;pinMsg='';render()});on('pinSave',()=>pinSet($('#pinNew').value));on('pinGo',()=>pinConnect($('#pinIn').value));}
+function doCheck(){const t=cur(),v=$('#inp').value;if(!v.trim())return;const r=check(v,t.accept||[t.answer]);answer(r.ok,{input:v,acc:r.acc,close:r.close})}
+document.addEventListener('keydown',e=>{if(view==='round'&&R&&R.state==='fb'&&e.key==='Enter'&&document.activeElement?.id!=='inp'){e.preventDefault();next()}});
+
+// Online-Speicher in einem privaten GitHub-Gist
+const GH_DESC='Ça repart Fortschritt',GH_FILE='progress.json';
+let ghTok=null,ghId=null,ghErr='',ghBusy=false,ghT=null;
+try{ghTok=localStorage.getItem('cr-gh-token');ghId=localStorage.getItem('cr-gh-id')}catch(e){}
+async function ghApi(path,opt={}){const r=await fetch('https://api.github.com'+path,{...opt,headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+ghTok,...(opt.body?{'Content-Type':'application/json'}:{})}});
+ if(!r.ok)throw new Error(r.status===401?'Der Schlüssel ist ungültig oder abgelaufen.':r.status===403||r.status===404?'Der Schlüssel darf keine Gists bearbeiten.':'GitHub antwortet nicht ('+r.status+').');return r.json()}
+async function ghInit(){if(!ghTok||!ghId)return;
+ try{const g=await ghApi('/gists/'+ghId);const f=g.files&&g.files[GH_FILE];let txt=f&&f.content;if(f&&f.truncated)txt=await (await fetch(f.raw_url)).text();
+  if(txt){const d=JSON.parse(txt);if(d&&d.items)S=merge(S,d)}store='github';ghErr='';try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+ catch(e){ghErr=e.message||'Keine Verbindung zu GitHub.'}}
+function ghPush(){if(!ghTok||!ghId||TEST)return;clearTimeout(ghT);ghT=setTimeout(async()=>{try{await ghApi('/gists/'+ghId,{method:'PATCH',body:JSON.stringify({files:{[GH_FILE]:{content:JSON.stringify(S)}}})});if(ghErr){ghErr='';if(!R)render()}}catch(e){ghErr=e.message||'Speichern bei GitHub fehlgeschlagen.';if(!R)render()}},1500)}
+async function ghConnect(tok){ghTok=tok.trim();ghErr='';ghBusy=true;render();
+ try{let gists=await ghApi('/gists?per_page=100');let g=gists.find(x=>x.description===GH_DESC&&x.files&&x.files[GH_FILE]);
+  if(!g)g=await ghApi('/gists',{method:'POST',body:JSON.stringify({description:GH_DESC,public:false,files:{[GH_FILE]:{content:JSON.stringify(S)}}})});
+  ghId=g.id;try{localStorage.setItem('cr-gh-token',ghTok);localStorage.setItem('cr-gh-id',ghId)}catch(e){}
+  await ghInit();if(!ghErr){save();bkMsg='Verbunden. Der Fortschritt wird ab jetzt online gespeichert.'}}
+ catch(e){ghErr=e.message||'Verbindung fehlgeschlagen.';ghTok=null;ghId=null}
+ ghBusy=false;render()}
+function ghOff(){ghTok=null;ghId=null;store='local';try{localStorage.removeItem('cr-gh-token');localStorage.removeItem('cr-gh-id')}catch(e){}render()}
+// Weitere Geräte mit PIN verbinden: Schlüssel verschlüsselt (PBKDF2 + AES-GCM) in einem öffentlichen Gist
+const PIN_DESC='Petit Parcours Schlüssel',PIN_FILE='schluessel.json',PIN_IT=600000;
+const GH_USER=location.hostname.endsWith('.github.io')?location.hostname.split('.')[0]:'petitparcours';
+let pinMsg='',pinBusy=false,pinMode=false;
+const b64e=b=>btoa(String.fromCharCode(...new Uint8Array(b))),b64d=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function pinKey(pin,salt,it){const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:it,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function pinSet(pin){pin=pin.trim();if(pin.length<4){pinMsg='Die PIN braucht mindestens 4 Zeichen.';return render()}
+ pinBusy=true;pinMsg='';render();
+ try{const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const k=await pinKey(pin,salt,PIN_IT);const data=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,new TextEncoder().encode(JSON.stringify({t:ghTok,g:ghId})));
+  const content=JSON.stringify({v:1,it:PIN_IT,salt:b64e(salt),iv:b64e(iv),data:b64e(data)});
+  const gists=await ghApi('/gists?per_page=100');const g=gists.find(x=>x.description===PIN_DESC);
+  if(g)await ghApi('/gists/'+g.id,{method:'PATCH',body:JSON.stringify({files:{[PIN_FILE]:{content}}})});
+  else await ghApi('/gists',{method:'POST',body:JSON.stringify({description:PIN_DESC,public:true,files:{[PIN_FILE]:{content}}})});
+  pinMode=false;pinMsg='Die PIN ist gespeichert. Auf anderen Geräten genügt jetzt diese PIN.'}
+ catch(e){pinMsg=e.message||'Die PIN konnte nicht gespeichert werden.'}
+ pinBusy=false;render()}
+async function pinConnect(pin){pin=pin.trim();if(!pin)return;pinBusy=true;pinMsg='';ghErr='';render();
+ try{const pub=async p=>{const r=await fetch('https://api.github.com'+p,{headers:{'Accept':'application/vnd.github+json'}});if(!r.ok)throw new Error('GitHub antwortet nicht ('+r.status+').');return r.json()};
+  const list=await pub('/users/'+GH_USER+'/gists?per_page=100');const g=list.find(x=>x.description===PIN_DESC);
+  if(!g)throw new Error('Es ist noch keine PIN eingerichtet. Lege sie zuerst auf einem verbundenen Gerät fest.');
+  const f=(await pub('/gists/'+g.id)).files[PIN_FILE];const o=JSON.parse(f.content);
+  let d;try{const k=await pinKey(pin,b64d(o.salt),o.it);d=JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64d(o.iv)},k,b64d(o.data))))}
+  catch(e){throw new Error('Die PIN stimmt nicht.')}
+  pinBusy=false;pinMsg='';await ghConnect(d.t);return}
+ catch(e){pinMsg=e.message||'Verbindung fehlgeschlagen.'}
+ pinBusy=false;render()}
+const inp=(id,ph,type)=>`<input type="${type}" id="${id}" autocomplete="off" placeholder="${ph}" style="width:100%;font:inherit;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin-top:6px">`;
+function ghHTML(){const pm=pinMsg?`<p class="fb ${/gespeichert/.test(pinMsg)?'ok':'no'}">${esc(pinMsg)}</p>`:'';
+ if(ghId)return `<h3>Online-Speicher</h3><p class="note">Mit GitHub verbunden. Der Fortschritt wird nach jeder Aufgabe automatisch gespeichert und beim Start geladen.</p>${ghErr?`<p class="fb no">${esc(ghErr)}</p>`:''}
+ <p class="note"><b>Weitere Geräte:</b> Lege eine PIN fest. Auf dem anderen Gerät genügt dann diese PIN statt des langen Schlüssels.</p>
+ ${pinMode?inp('pinNew','Neue PIN (mind. 4 Zeichen)','password'):''}${pm}
+ <div class="actions">${pinMode?`<button class="plain" id="pinSave" ${pinBusy?'disabled':''}>${pinBusy?'Speichere …':'PIN speichern'}</button>`:`<button class="plain" id="pinAsk">PIN festlegen</button>`}<button class="plain" id="ghOff">Online-Speicher trennen</button></div>`;
+ return `<h3>Online-Speicher</h3><p class="note">Gib die PIN ein, um dieses Gerät zu verbinden. Danach wird der Fortschritt automatisch online gespeichert.</p>
+ ${inp('pinIn','PIN','password')}${pm}<div class="actions"><button class="plain" id="pinGo" ${pinBusy||ghBusy?'disabled':''}>${pinBusy||ghBusy?'Verbinde …':'Mit PIN verbinden'}</button></div>
+ <details style="margin-top:8px"><summary class="note">Noch keine PIN? Mit dem GitHub-Schlüssel verbinden</summary>${inp('ghTok','github_pat_…','password')}${ghErr?`<p class="fb no">${esc(ghErr)}</p>`:''}<div class="actions"><button class="plain" id="ghOn" ${ghBusy?'disabled':''}>${ghBusy?'Verbinde …':'Verbinden'}</button></div></details>`}
+
+loadLocal();if(!localOK())store='none';
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+if('serviceWorker' in navigator)try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
+(async()=>{render();await ghInit();if(view!=='round')render()})();
+</script>
+</body>
+</html>
