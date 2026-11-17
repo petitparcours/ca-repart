@@ -73,6 +73,25 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two .big{margin-top:6px}
 .foot-act{margin-top:6px}
 details summary{cursor:pointer;margin-top:8px}
+
+.tabs button{font-size:15px}
+.clip{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.thumb{position:relative;border:0;padding:0;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;align-self:start}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+.thumb span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:28px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.thumb em{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.75);color:#fff;font-style:normal;font-size:12px;padding:1px 5px;border-radius:4px}
+.vid{grid-column:1/-1;position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cmeta b{display:block;font-weight:600;line-height:1.3}.cmeta small{display:block;color:var(--soft);font-size:13px;margin-top:2px}.seen{color:var(--sure);font-weight:700}
+.hint{font-size:14px;color:var(--ink);background:var(--chip);border-radius:8px;padding:6px 9px;margin:6px 0 0}
+.cact{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.cact .plain{font-size:14px;padding:7px 10px;text-decoration:none;display:inline-block}
+.note-form{display:grid;gap:6px;margin-top:8px}.note-form .actions{margin-top:2px}
+.ghost.inline{display:inline-block;width:auto;margin:0;padding:10px}
+.fb.small{padding:8px 10px;font-size:14px;font-weight:600}
+.res{display:block;text-decoration:none;color:var(--ink);padding:10px 0;border-top:1px solid var(--line)}.res b{display:block;color:var(--navy)}.res small{color:var(--soft);font-size:14px}
+details{border-top:1px solid var(--line);padding:10px 0}details summary{list-style:none;cursor:pointer}details summary::-webkit-details-marker{display:none}details summary::before{content:'›';display:inline-block;margin-right:8px;transition:transform .2s;color:var(--soft)}details[open] summary::before{transform:rotate(90deg)}details summary small{color:var(--soft)}
+.del{background:none;border:0;color:var(--soft);font-size:16px;padding:6px}
+ol.how{padding-left:20px}
+@media (max-width:480px){.clip{grid-template-columns:1fr}.thumb{max-width:100%}}
 @media (max-width:420px){.stats{grid-template-columns:repeat(2,1fr)}.prompt{font-size:21px}}
 </style>
 </head>
@@ -84,7 +103,7 @@ const ICON='icon-192_1.png';
 const AREAS=[
  {id:'talk',name:'Gespräche mit Locals'},
  {id:'trip',name:'Ferien & Alltag'},
- {id:'home',name:'Haus & Handwerker'},
+ {id:'work',name:'Alltag & Arbeit'},
  {id:'news',name:'Aktuelles & Debatten'}];
 const THEMES=[
 {id:'connaitre',area:'talk',name:'Kennenlernen',items:[
@@ -322,84 +341,84 @@ const THEMES=[
  ['les heures d’ouverture','die Öffnungszeiten'],
  ['C’est fermé entre midi et deux.','Über Mittag ist geschlossen.'],
  ['Il faut faire la queue.','Man muss anstehen.']]},
-{id:'maison',area:'home',name:'Haus & Räume',items:[
- ['une maison de village','ein Dorfhaus'],
- ['le rez-de-chaussée','das Erdgeschoss'],
- ['l’étage','das Obergeschoss'],
- ['le grenier','der Dachboden'],
- ['la cave','der Keller'],
- ['les combles','der Dachstock'],
- ['le séjour','das Wohnzimmer'],
- ['la pièce','das Zimmer (allgemein)'],
- ['les volets','die Fensterläden'],
- ['la terrasse','die Terrasse'],
- ['le mur en pierre','die Steinmauer'],
- ['le toit','das Dach'],
- ['les tuiles','die Ziegel'],
- ['la cheminée','der Kamin'],
- ['le poêle à bois','der Holzofen'],
- ['le chauffage','die Heizung'],
- ['la chaudière','der Heizkessel'],
- ['le chauffe-eau','der Boiler'],
- ['le compteur électrique','der Stromzähler'],
- ['le tableau électrique','der Sicherungskasten'],
- ['les murs sont humides','die Wände sind feucht'],
- ['l’humidité','die Feuchtigkeit'],
- ['les fissures','die Risse'],
- ['la résidence secondaire','der Zweitwohnsitz'],
- ['le terrain','das Grundstück']]},
-{id:'travaux',area:'home',name:'Renovation & Handwerker',items:[
- ['faire des travaux','renovieren, umbauen'],
- ['un artisan','ein Handwerker'],
- ['le plombier','der Sanitär (Installateur)'],
- ['l’électricien','der Elektriker'],
- ['le maçon','der Maurer'],
- ['le couvreur','der Dachdecker'],
- ['le menuisier','der Schreiner'],
- ['le carreleur','der Plattenleger'],
- ['le peintre','der Maler'],
- ['Vous pourriez me faire un devis ?','Könnten Sie mir eine Offerte machen?'],
- ['un devis gratuit','eine kostenlose Offerte'],
- ['Les travaux vont durer combien de temps ?','Wie lange dauern die Arbeiten?'],
- ['Quand est-ce que vous pouvez commencer ?','Wann können Sie anfangen?'],
- ['le chantier','die Baustelle'],
- ['un acompte','eine Anzahlung'],
- ['Il y a une fuite d’eau.','Es hat ein Wasserleck.'],
- ['Le chauffe-eau est en panne.','Der Boiler ist kaputt.'],
- ['Les fusibles ont sauté.','Die Sicherungen sind herausgesprungen.'],
- ['refaire la toiture','das Dach neu machen'],
- ['isoler les combles','den Dachstock isolieren'],
- ['l’isolation','die Isolation'],
- ['changer les fenêtres','die Fenster ersetzen'],
- ['le double vitrage','die Doppelverglasung'],
- ['la pompe à chaleur','die Wärmepumpe'],
- ['le diagnostic de performance énergétique (DPE)','der Energieausweis (DPE)'],
- ['la rénovation énergétique','die energetische Sanierung'],
- ['une aide de l’État','eine staatliche Förderung'],
- ['C’est aux normes ?','Entspricht das den Vorschriften?'],
- ['La facture est plus élevée que le devis.','Die Rechnung ist höher als die Offerte.'],
- ['On n’est pas pressés.','Wir haben es nicht eilig.']]},
-{id:'voisins',area:'home',name:'Garten, Nachbarn & Gemeinde',items:[
- ['le voisin / la voisine','der Nachbar / die Nachbarin'],
- ['le jardin','der Garten'],
- ['tondre la pelouse','den Rasen mähen'],
- ['tailler la haie','die Hecke schneiden'],
- ['débroussailler','Gestrüpp entfernen (Brandschutz)'],
- ['l’obligation de débroussaillement','die Pflicht zur Buschrodung'],
- ['l’arrosage','das Giessen'],
- ['le puits','der Brunnen (Schacht)'],
- ['la fosse septique','die Klärgrube'],
- ['le raccordement au tout-à-l’égout','der Anschluss an die Kanalisation'],
- ['la mairie','das Gemeindehaus'],
- ['le maire','der Gemeindepräsident (Bürgermeister)'],
- ['un permis de construire','eine Baubewilligung'],
- ['une déclaration préalable de travaux','eine Bauanzeige'],
- ['le cadastre','das Grundbuch / Kataster'],
- ['le notaire','der Notar'],
- ['Pourriez-vous garder un œil sur la maison ?','Könnten Sie ein Auge auf das Haus haben?'],
- ['On rentre en Suisse dimanche.','Wir fahren am Sonntag in die Schweiz zurück.'],
- ['Je vous laisse mon numéro.','Ich gebe Ihnen meine Nummer.'],
- ['On peut se rendre service.','Wir können uns gegenseitig aushelfen.']]},
+{id:'bureau',area:'work',name:'Im Büro',items:[
+ ['une réunion','eine Sitzung'],
+ ['l’ordre du jour','die Traktandenliste'],
+ ['ma responsable','meine Vorgesetzte'],
+ ['l’équipe','das Team'],
+ ['être en télétravail','im Homeoffice sein'],
+ ['Je suis en télétravail le vendredi.','Am Freitag arbeite ich im Homeoffice.'],
+ ['la pause café','die Kaffeepause'],
+ ['la cantine','die Kantine'],
+ ['J’ai beaucoup de boulot en ce moment.','Ich habe gerade viel Arbeit.','boulot = familier'],
+ ['Je suis débordé.','Ich bin überlastet.'],
+ ['une échéance','eine Frist'],
+ ['C’est pour quand ?','Bis wann muss es fertig sein?'],
+ ['C’est urgent ?','Ist es dringend?'],
+ ['un dossier','ein Dossier, ein Vorgang'],
+ ['un projet','ein Projekt'],
+ ['Je suis en congé la semaine prochaine.','Ich habe nächste Woche frei.'],
+ ['poser un jour de congé','einen Tag freinehmen'],
+ ['être en arrêt maladie','krankgeschrieben sein'],
+ ['L’imprimante ne marche pas.','Der Drucker funktioniert nicht.'],
+ ['J’ai oublié mon mot de passe.','Ich habe mein Passwort vergessen.'],
+ ['Tu peux m’envoyer le fichier ?','Kannst du mir die Datei schicken?'],
+ ['Je te mets en copie.','Ich setze dich in Kopie.'],
+ ['Je reviens vers toi.','Ich melde mich wieder bei dir.','Büro-Jargon'],
+ ['On fait le point demain ?','Besprechen wir morgen den Stand?'],
+ ['Bonne pause !','Schöne Pause!']]},
+{id:'reunion',area:'work',name:'Sitzungen, Mails & Telefon',items:[
+ ['Je vous appelle au sujet de…','Ich rufe Sie wegen … an.'],
+ ['Est-ce que je pourrais parler à Madame Martin ?','Könnte ich mit Frau Martin sprechen?'],
+ ['Ne quittez pas.','Bleiben Sie dran.'],
+ ['Je vous la passe.','Ich verbinde Sie mit ihr.'],
+ ['Elle est en réunion.','Sie ist in einer Sitzung.'],
+ ['Je peux laisser un message ?','Kann ich eine Nachricht hinterlassen?'],
+ ['Je vous rappelle dans cinq minutes.','Ich rufe Sie in fünf Minuten zurück.'],
+ ['Vous pouvez épeler, s’il vous plaît ?','Können Sie das bitte buchstabieren?'],
+ ['Suite à notre conversation,','Im Anschluss an unser Gespräch'],
+ ['Je me permets de vous relancer.','Ich erlaube mir, nochmals nachzufragen.'],
+ ['Vous trouverez ci-joint…','Im Anhang finden Sie …'],
+ ['la pièce jointe','der Anhang'],
+ ['Cordialement,','Freundliche Grüsse'],
+ ['Bien à vous,','Mit besten Grüssen'],
+ ['On peut décaler la réunion ?','Können wir die Sitzung verschieben?'],
+ ['Ça vous va jeudi à 14 heures ?','Passt Ihnen Donnerstag um 14 Uhr?'],
+ ['On passe au point suivant.','Wir kommen zum nächsten Punkt.'],
+ ['Qui prend le compte rendu ?','Wer schreibt das Protokoll?'],
+ ['Si je comprends bien,','Wenn ich richtig verstehe'],
+ ['Pour résumer,','Zusammengefasst'],
+ ['Je ne suis pas d’accord sur ce point.','In diesem Punkt bin ich nicht einverstanden.'],
+ ['la visio','die Videokonferenz','kurz für visioconférence'],
+ ['Tu m’entends ?','Hörst du mich?'],
+ ['Tu as coupé ton micro.','Dein Mikrofon ist stumm.'],
+ ['Je partage mon écran.','Ich teile meinen Bildschirm.']]},
+{id:'quotidien',area:'work',name:'Alltagsgespräche',items:[
+ ['Quoi de neuf ?','Was gibt’s Neues?'],
+ ['Ça fait longtemps !','Lange nicht gesehen!'],
+ ['Tu as passé un bon week-end ?','Hattest du ein schönes Wochenende?'],
+ ['Rien de spécial.','Nichts Besonderes.'],
+ ['On fait aller.','Es geht so.','familier'],
+ ['Je suis à la bourre.','Ich bin spät dran.','familier'],
+ ['Désolé, je suis en retard.','Entschuldigung, ich bin zu spät.'],
+ ['Tu as deux minutes ?','Hast du kurz Zeit?'],
+ ['Je te dérange ?','Störe ich?'],
+ ['Vas-y, je t’écoute.','Schiess los, ich höre zu.'],
+ ['Ça te dit d’aller boire un verre ?','Hast du Lust, etwas trinken zu gehen?'],
+ ['J’ai un empêchement.','Mir ist etwas dazwischengekommen.'],
+ ['On remet ça à une autre fois ?','Verschieben wir es auf ein andermal?'],
+ ['Je t’envoie un texto.','Ich schicke dir eine SMS.'],
+ ['Je te tiens au courant.','Ich halte dich auf dem Laufenden.'],
+ ['Ce n’est pas grave.','Das ist nicht schlimm.'],
+ ['Bon courage !','Viel Kraft! / Durchhalten!'],
+ ['Je m’en occupe.','Ich kümmere mich darum.'],
+ ['Ça m’est sorti de la tête.','Das ist mir entfallen.'],
+ ['Ça me dit quelque chose.','Das kommt mir bekannt vor.'],
+ ['Je dois y aller.','Ich muss los.'],
+ ['On s’appelle ?','Telefonieren wir?'],
+ ['Ça te va ?','Passt dir das?'],
+ ['Comme tu veux.','Wie du willst.'],
+ ['Bonne continuation !','Alles Gute weiterhin!']]},
 {id:'medias',area:'news',name:'Medien & Politik',items:[
  ['l’actualité','das Zeitgeschehen'],
  ['les infos','die Nachrichten'],
@@ -793,6 +812,88 @@ const GRAM=[
  ['t','Schreibe gesprochen ohne ne: Je ne comprends pas. → ___','Je comprends pas.|Je comprends pas','ne fällt weg.']]}
 ];
 
+// Clips: [YouTube-ID, Quelle, Titel, Dauer, Niveau, Hörauftrag]
+const SOURCES={
+ kara:{name:'Karambolage (ARTE)',de:'Kurze, witzige Clips über Alltag in Frankreich und Deutschland. Gut gesprochen, kulturell reich.'},
+ easy:{name:'Easy French',de:'Strassenumfragen mit echten Leuten. Schnell, umgangssprachlich, mit Untertiteln.'},
+ pierre:{name:'Français avec Pierre',de:'Ein Lehrer erklärt Alltagsausdrücke, ganz auf Französisch.'},
+ inner:{name:'innerFrench',de:'Podcast auf B1/B2-Niveau über Gesellschaftsthemen, klar gesprochen.'},
+ other:{name:'Französische Kanäle',de:'Originalvideos für Muttersprachler.'}};
+const CLIPS={
+connaitre:[
+ ['695ludBa7sc','easy','9 questions pour faire connaissance','13 Min.','B1','Wie fragen die Leute nach Herkunft, Beruf und Wohnort? Achte auf «Tu viens d’où ?» und «Tu fais quoi dans la vie ?».'],
+ ['YCuU4SjcS2A','easy','Pourquoi vivez-vous à Paris ?','9 Min.','B1','Wie begründen die Leute? Achte auf «parce que», «du coup» und «ça fait … ans que …».'],
+ ['5r1yJ3BKkFA','easy','Comment ça va, vraiment ?','9 Min.','B1','Welche Antworten gibt es ausser «ça va» – und wie reagiert man darauf?']],
+reagir:[
+ ['c9EDt69MPhU','pierre','20 phrases essentielles pour la conversation','8 Min.','B1','Welche Wendungen kennst du schon aus dem Thema «Im Gespräch reagieren»?'],
+ ['WUKQ1RBt2_I','pierre','12 expressions de tous les jours','13 Min.','B1–B2','Notiere zwei Ausdrücke, die du selbst benutzen willst.'],
+ ['okkJCUnodoU','pierre','Ne dis pas « du coup »','17 Min.','B2','Was sagt man statt «du coup»? Achte auf «donc», «alors», «par conséquent».']],
+familier:[
+ ['CmTYhv2F96k','easy','10 expressions familières','6 Min.','B1','Welche Ausdrücke kennst du schon aus «Umgangssprache»?'],
+ ['0m41Mv4E3h0','other','20 expressions que les jeunes utilisent vraiment','10 Min.','B2','Gaspard Français. Achte auf Wörter wie «grave», «carrément», «c’est chaud».']],
+vie:[
+ ['ooouJuoeQ1c','easy','Quel est votre métier ?','8 Min.','B1','Wie sprechen die Leute über ihre Arbeit? Achte auf «je bosse», «je travaille dans …».'],
+ ['KIg7nR1Ch7k','easy','La vie de famille en France','7 Min.','B1','Achte auf Familienwörter und auf «on» statt «nous».'],
+ ['Dvx6IAiDx_c','easy','Vendredi soir : vous faites quoi ?','8 Min.','B1','Achte auf das Futur proche: «je vais …», «on va …».']],
+avis:[
+ ['flS3MVNXWbw','easy','Les secrets du bonheur à la française','9 Min.','B1','Wie drücken die Leute Gefühle aus? Achte auf «ça me rend …», «j’adore», «ça me fait plaisir».'],
+ ['-VWMMfdLw0U','easy','Opinions impopulaires','12 Min.','B2','Wie wird eine Meinung eingeleitet? «Je trouve que …», «pour moi …», «franchement …».'],
+ ['Bn11sSjvFKw','easy','Avez-vous des regrets ?','10 Min.','B2','Achte auf den Conditionnel passé: «j’aurais dû …», «j’aurais aimé …».']],
+marche:[
+ ['3jdRN1LZvSg','easy','Au marché, en français lent','13 Min.','B1','Achte auf «Et avec ceci ?», Mengen (un kilo, une livre) und «Ce sera tout».'],
+ ['oXIWKV2VpbA','easy','Commander à la boulangerie','10 Min.','A2–B1','Wie bestellt man höflich? «Je voudrais …», «Il vous faut autre chose ?».'],
+ ['XlSEK813yBs','kara','La baguette','3 Min.','B1','Was macht eine «bonne baguette» aus? Achte auf «bien cuite» und «pas trop cuite».'],
+ ['DrvHI5dkU0o','kara','L’apéro, le rituel préféré des Français','4 Min.','B1','Wer kommt zum Apéro, was trinkt man? Passt zu «Venez prendre l’apéro».']],
+resto:[
+ ['MBK7K1Xw3Lc','easy','Commander un café','5 Min.','A2–B1','Welche Kaffeesorten gibt es? «un café», «un crème», «un allongé».'],
+ ['iLaWCP_U9xE','easy','Un déjeuner typique en France','9 Min.','B1','Achte auf «entrée – plat – dessert» und «le plat du jour».'],
+ ['zdt9ynYStX8','kara','Le pourboire','4 Min.','B1','Wie viel Trinkgeld gibt man in Frankreich? Passt zu «Le service est compris ?».']],
+route:[
+ ['GE0fwx6boLw','easy','À la gare : vous allez où ?','8 Min.','B1','Achte auf Reisewörter: «un aller-retour», «la correspondance», «en retard».'],
+ ['v2z27l69Cw4','easy','Phrases utiles pour voyager','8 Min.','A2–B1','Welche Sätze kennst du schon aus «Unterwegs»?'],
+ ['6yi9N-5MDgs','easy','Où voyager en France ?','9 Min.','B1','Wer schwärmt vom Süden? Achte auf Superlative: «le plus beau», «la meilleure».']],
+sante:[
+ ['071rT-6irr8','easy','Chez le médecin','7 Min.','A2–B1','Achte auf «J’ai mal à …», «une ordonnance», «deux fois par jour».'],
+ ['LSbCLVFaWnI','other','Chez le médecin et à la pharmacie','9 Min.','A2','Easy French Mastery. Langsame Dialoge: gut zum Nachsprechen.']],
+services:[
+ ['k445MgiKyIU','other','À la poste et à la banque','20 Min.','A2–B1','Daily French Conversation. Achte auf «envoyer un colis», «retirer de l’argent», «remplir un formulaire».'],
+ ['WdWl9y2THgs','kara','Allô ?','3 Min.','B1','Wie meldet man sich am Telefon – in Frankreich und in Deutschland?']],
+bureau:[
+ ['E830oKsQ5bo','inner','Travailler avec les Français','38 Min.','B2','Wie läuft die Arbeit in französischen Büros? Achte auf «une réunion», «la hiérarchie», «le patron».'],
+ ['Fw654p9awoM','easy','Quels jobs cherchent les Parisiens ?','9 Min.','B1','Achte auf «je cherche un poste», «un CDI», «postuler».'],
+ ['If_iJ4geb8A','easy','Votre premier job d’étudiant ?','10 Min.','B1','Erzählen in der Vergangenheit: Achte auf Imparfait und Passé composé.'],
+ ['kxwmd2EYnEA','kara','« Feierabend »','4 Min.','B1','Ein deutsches Wort ohne französische Entsprechung – wie sagt man es trotzdem?']],
+reunion:[
+ ['iS5GC3-VGRs','other','L’appel téléphonique professionnel','5 Min.','B1–B2','Learn French with Timo. Achte auf «Ne quittez pas», «Je vous le passe», «laisser un message».'],
+ ['cok2P9y_jsE','other','30 phrases pour des e-mails professionnels','4 Min.','B1–B2','Français avec Fred. Achte auf «ci-joint», «je me permets de», «cordialement».'],
+ ['0OR2LudTnHI','other','Parler en réunion professionnelle','11 Min.','B2','Pro en Français. Wie bringt man sich ein, widerspricht, fasst zusammen?']],
+quotidien:[
+ ['unmu4yKfBg0','easy','Votre week-end ?','8 Min.','B1','Achte auf «Tu as passé un bon week-end ?» und wie die Leute erzählen.'],
+ ['pSfICaFd2jo','easy','Discuter entre amis comme un natif','7 Min.','B1','Achte auf Kurzformen: «t’as», «y a», «chais pas».'],
+ ['aMx0d42wzBs','easy','Une conversation de tous les jours','7 Min.','A2–B1','Langsames Alltagsgespräch – gut zum Nachsprechen.'],
+ ['og9R-J6bduk','easy','Décrivez votre meilleur ami','11 Min.','B1','Achte auf Adjektive und Relativsätze: «quelqu’un qui …», «un ami que …».']],
+medias:[
+ ['dAEteuFTnMk','easy','Les Français et les réseaux sociaux','10 Min.','B1','Achte auf «les réseaux sociaux», «les infos», «je suis abonné à …».'],
+ ['MazvI0hnhpg','kara','La droite et la gauche','3 Min.','B1','Woher kommen «la gauche» und «la droite»?'],
+ ['ukGTH8OjDys','kara','Le vote par correspondance','4 Min.','B2','Briefwahl in Deutschland und Frankreich – passt zu «voter», «les élections».']],
+societe:[
+ ['t-avin9iHrI','easy','Combien coûte un loyer à Paris ?','9 Min.','B1','Achte auf «le loyer», «le logement», «c’est hors de prix».'],
+ ['7PUt9qUxvI8','easy','Combien faut-il pour vivre à Paris ?','9 Min.','B1','Passt zu «le coût de la vie» und «le pouvoir d’achat».'],
+ ['3OOM53DXk5g','kara','Bobo','4 Min.','B2','Was ist ein «bobo»? Gesellschaftliche Etiketten in Frankreich.'],
+ ['vfyMakR2bds','inner','Le télétravail va-t-il changer la société ?','36 Min.','B2','Lange Folge – gut für unterwegs. Achte auf Verbindungswörter: «d’un côté», «en revanche».']],
+argumenter:[
+ ['-B1hLfuaMcs','inner','Le revenu universel : une utopie ?','30 Min.','B2','Wie werden Pro und Contra aufgebaut? Achte auf «pourtant», «néanmoins», «il est vrai que … mais».'],
+ ['uUwVPql93p0','pierre','Dialogues en français, niveau B2','29 Min.','B2','Dialoge mit PDF. Gut zum Nachsprechen von Meinungsäusserungen.'],
+ ['nDCVXdenDII','easy','Les erreurs culturelles à éviter en France','9 Min.','B1','Wie sagen die Leute höflich, was sie stört? «Ce qui me gêne, c’est …».']]
+};
+// Kultur-Extras ohne festes Thema
+const EXTRA=[
+ ['rxHcrRogbAA','kara','La bise','3 Min.','B1','Wie viele Küsschen? Je nach Region verschieden.'],
+ ['MHoDEP-rF4c','inner','Apprendre le français naturellement','28 Min.','B1–B2','Erste Folge von innerFrench: wie man durch Zuhören lernt.']];
+const AUDIO=[
+ {name:'RFI – Journal en français facile',url:'https://francaisfacile.rfi.fr/',de:'Jeden Tag 10 Minuten Nachrichten, langsam gesprochen, mit Text zum Mitlesen. Ideal für «Aktuelles & Debatten».'},
+ {name:'TV5MONDE – Apprendre le français',url:'https://apprendre.tv5monde.com/',de:'Kurze Videos nach Niveau (B1, B2) mit Übungen und Transkript.'}];
+
 // ===== Ça repart ! – Französisch auffrischen =====
 const KEY='ca-repart-v1',DAY=864e5,INT=[0,1,3,7,16,35,80];
 const $=s=>document.querySelector(s),app=$('#app');
@@ -803,20 +904,24 @@ const today=()=>new Date().toISOString().slice(0,10);
 
 // ---- Inhalte vorbereiten
 const ORDER=(()=>{const by={};THEMES.forEach(t=>(by[t.area]=by[t.area]||[]).push(t));const out=[];for(let k=0;k<10;k++)AREAS.forEach(a=>by[a.id]&&by[a.id][k]&&out.push(by[a.id][k]));return out})();
-const VOC=THEMES.flatMap(t=>t.items.map((x,i)=>({id:'v:'+t.id+':'+i,type:'v',theme:t.id,area:t.area,fr:x[0],de:x[1],note:x[2]||''})));
+let VOC=[];const BASEVOC=THEMES.flatMap(t=>t.items.map((x,i)=>({id:'v:'+t.id+':'+i,type:'v',theme:t.id,area:t.area,fr:x[0],de:x[1],note:x[2]||''})));
 const GIT=GRAM.flatMap(u=>u.items.map((x,i)=>x[0]==='c'?{id:'g:'+u.id+':'+i,type:'g',unit:u.id,kind:'c',prompt:x[1],answer:x[2],options:x[3],why:x[4]}:{id:'g:'+u.id+':'+i,type:'g',unit:u.id,kind:'t',prompt:x[1],answer:x[2].split('|')[0],accept:x[2].split('|'),why:x[3]}));
-const ALL=[...VOC,...GIT],BY=Object.fromEntries(ALL.map(i=>[i.id,i]));
+let ALL=[],BY={};
+function ownItems(){return Object.entries(S.own||{}).filter(([k,o])=>!o.del).sort((a,b)=>a[1].t-b[1].t).map(([k,o])=>({id:'o:'+k,type:'v',theme:'own',area:'own',fr:o.fr,de:o.de,note:o.src?'aus «'+o.src+'»':'eigene Wendung'}))}
+function rebuild(){VOC=[...BASEVOC,...ownItems()];ALL=[...VOC,...GIT];BY=Object.fromEntries(ALL.map(i=>[i.id,i]))}
 const themeOf=id=>THEMES.find(t=>t.id===id),unitOf=id=>GRAM.find(u=>u.id===id);
 
 // ---- Zustand
-const blank=()=>({items:{},days:{},sessions:0,units:{},rate:0.95,updatedAt:0});
+const blank=()=>({items:{},days:{},sessions:0,units:{},own:{},clips:{},rate:0.95,updatedAt:0});
 let S=blank(),store='local',R=null,view='home',sub=null,bkMsg='',bkCode='',TEST=false;
 function localOK(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true}catch(e){return false}}
-function loadLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.items)S={...blank(),...x}}catch(e){}}
+function loadLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.items)S={...blank(),...x}}catch(e){}rebuild()}
 function mergeStore(a={},b={}){const o={...a};for(const k in b){if(!o[k]||(b[k].seen||0)>(o[k].seen||0)||((b[k].seen||0)===(o[k].seen||0)&&(b[k].next||0)>(o[k].next||0)))o[k]=b[k]}return o}
 function merge(a,b){const d={...a.days};for(const k in b.days||{})d[k]=Math.max(d[k]||0,b.days[k]);
- return{...blank(),...a,items:mergeStore(a.items,b.items),days:d,units:{...(b.units||{}),...(a.units||{})},sessions:Math.max(a.sessions||0,b.sessions||0),rate:a.updatedAt>=(b.updatedAt||0)?a.rate:b.rate,updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0)}}
-function save(){if(TEST)return;S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}ghPush()}
+ const own={...(b.own||{})};for(const k in a.own||{}){const x=a.own[k],y=own[k];own[k]=!y?x:(x.del||y.del)?{...x,del:1}:(x.t>=y.t?x:y)}
+ const clips={...(b.clips||{}),...(a.clips||{})};
+ return{...blank(),...a,items:mergeStore(a.items,b.items),days:d,own,clips,units:{...(b.units||{}),...(a.units||{})},sessions:Math.max(a.sessions||0,b.sessions||0),rate:a.updatedAt>=(b.updatedAt||0)?a.rate:b.rate,updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0)}}
+function save(){rebuild();if(TEST)return;S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}ghPush()}
 
 // ---- Sprachausgabe
 let voice=null;function pickVoice(){const v=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang));voice=v.find(v=>/fr-FR/i.test(v.lang)&&/google|amélie|thomas|audrey|marie|natural/i.test(v.name))||v.find(v=>/fr-FR/i.test(v.lang))||v[0]||null}
@@ -863,11 +968,11 @@ function gramTask(item){const u=unitOf(item.unit);
 const taskFor=(item,mode)=>item.type==='v'?vocTask(item,mode):gramTask(item);
 
 // ---- Sitzung zusammenstellen
-const inFocus=(i,f)=>!f||f==='mix'||(f.startsWith('area:')&&i.type==='v'&&i.area===f.slice(5))||(f.startsWith('theme:')&&i.theme===f.slice(6))||(f==='gram'&&i.type==='g')||(f.startsWith('unit:')&&i.unit===f.slice(5));
+const inFocus=(i,f)=>!f||f==='mix'||(f.startsWith('area:')&&i.type==='v'&&i.area===f.slice(5))||(f==='area:own'&&i.theme==='own')||(f.startsWith('theme:')&&i.theme===f.slice(6))||(f==='gram'&&i.type==='g')||(f.startsWith('unit:')&&i.unit===f.slice(5));
 function freshList(f){const vt=ORDER.filter(t=>inFocus({type:'v',area:t.area,theme:t.id},f)),ut=GRAM.filter(u=>inFocus({type:'g',unit:u.id},f));
  const firstOpen=(arr,key)=>{for(const g of arr){const its=ALL.filter(i=>i[key]===g.id&&!st(i.id));if(its.length)return its}return[]};
  // zwei offene Wortschatz-Themen gleichzeitig, damit es abwechslungsreich bleibt
- let v=[];const open=vt.map(t=>VOC.filter(i=>i.theme===t.id&&!st(i.id))).filter(a=>a.length).slice(0,2);
+ let v=(!f||f==='mix'||f==='area:own')?VOC.filter(i=>i.theme==='own'&&!st(i.id)).slice(0,4):[];const open=vt.map(t=>VOC.filter(i=>i.theme===t.id&&!st(i.id))).filter(a=>a.length).slice(0,2);
  for(let k=0;k<12;k++)open.forEach(a=>a[k]&&v.push(a[k]));
  return{v,g:firstOpen(ut,'unit')}}
 function buildSession(f,size=15){const due=ALL.filter(i=>inFocus(i,f)&&isDue(i.id)).sort((a,b)=>st(a.id).next-st(b.id).next);
@@ -899,16 +1004,16 @@ function next(){R.i++;R.state='ask';R.last=null;if(R.i>=R.tasks.length){S.sessio
 const fillGap=it=>!it.prompt.includes('___')?it.answer:it.prompt.replace(/\s*\([^)]*\)\s*$/,'').replace(/\s*\([^)]*\)/,'').replace('___',it.answer).replace(/^.*→\s*/,'');
 
 // ---- Ansichten
-const AREA_ICON={talk:'💬',trip:'🧺',home:'🔨',news:'📰'};
+const AREA_ICON={talk:'💬',trip:'🧺',work:'💼',news:'📰'};
 function progressOf(list){const n=list.length,s=list.filter(i=>st(i.id)).length,m=list.filter(i=>(st(i.id)?.box||0)>=4).length;return{n,s,m}}
 function streak(){let n=0,d=new Date();for(;;){const k=d.toISOString().slice(0,10);if(S.days[k])n++;else if(n||k!==today())break;d=new Date(d-DAY);if(n>999)break}return n}
 function bar(p){return `<div class="bar"><i style="width:${p.n?Math.round(p.s/p.n*100):0}%"></i><b style="width:${p.n?Math.round(p.m/p.n*100):0}%"></b></div>`}
 function render(){document.body.dataset.view=view;
- const nav=`<nav class="tabs">${[['home','Heute'],['gram','Grammatik'],['vocab','Wörter'],['settings','Optionen']].map(([k,l])=>`<button data-v="${k}" class="${view===k?'on':''}">${l}</button>`).join('')}</nav>`;
+ const nav=`<nav class="tabs">${[['home','Heute'],['gram','Grammatik'],['vocab','Wörter'],['listen','Hören'],['settings','Optionen']].map(([k,l])=>`<button data-v="${k}" class="${view===k?'on':''}">${l}</button>`).join('')}</nav>`;
  const head=`<header class="top"><img src="${ICON}" alt=""><div><h1>Ça repart !</h1><p>Französisch auffrischen</p></div></header>`;
  let h='';
  if(view==='round')h=roundHTML();else if(view==='done')h=doneHTML();
- else h=head+nav+(view==='home'?homeHTML():view==='gram'?gramHTML():view==='vocab'?vocabHTML():settingsHTML());
+ else h=head+nav+(view==='home'?homeHTML():view==='gram'?gramHTML():view==='vocab'?vocabHTML():view==='listen'?listenHTML():settingsHTML());
  app.innerHTML=h;bind()}
 function homeHTML(){const due=ALL.filter(i=>isDue(i.id)).length,seen=ALL.filter(i=>st(i.id)).length,sure=ALL.filter(i=>(st(i.id)?.box||0)>=4).length,sk=streak(),td=S.days[today()]||0;
  const fv=sub&&sub.startsWith('focus:')?sub.slice(6):'mix';
@@ -929,11 +1034,11 @@ function unitHTML(u){const p=progressOf(GIT.filter(i=>i.unit===u.id));
  <div class="rule">${u.text}</div><h3>Beispiele</h3><ul class="ex">${u.ex.map(([f,d])=>`<li><button class="say" data-say="${esc(f)}" aria-label="Vorlesen">🔊</button><span><b>${esc(f)}</b><small>${esc(d)}</small></span></li>`).join('')}</ul>
  <div class="actions"><button class="big" data-start="unit:${u.id}">Diese Einheit üben</button></div></section>`}
 function vocabHTML(){if(sub&&sub.startsWith('theme:'))return themeHTML(themeOf(sub.slice(6)));
- return AREAS.map(a=>`<section class="card"><h3>${AREA_ICON[a.id]} ${esc(a.name)}</h3><ul class="list">${THEMES.filter(t=>t.area===a.id).map(t=>{const p=progressOf(VOC.filter(i=>i.theme===t.id));return `<li><button class="row" data-theme="${t.id}"><span><b>${esc(t.name)}</b><small>${p.s} von ${p.n} geübt · ${p.m} sitzen</small>${bar(p)}</span><i>›</i></button></li>`}).join('')}</ul><div class="actions"><button class="plain" data-start="area:${a.id}">Nur diesen Bereich üben</button></div></section>`).join('')}
+ return ownHTML()+AREAS.map(a=>`<section class="card"><h3>${AREA_ICON[a.id]} ${esc(a.name)}</h3><ul class="list">${THEMES.filter(t=>t.area===a.id).map(t=>{const p=progressOf(VOC.filter(i=>i.theme===t.id));return `<li><button class="row" data-theme="${t.id}"><span><b>${esc(t.name)}</b><small>${p.s} von ${p.n} geübt · ${p.m} sitzen</small>${bar(p)}</span><i>›</i></button></li>`}).join('')}</ul><div class="actions"><button class="plain" data-start="area:${a.id}">Nur diesen Bereich üben</button></div></section>`).join('')}
 function themeHTML(t){const its=VOC.filter(i=>i.theme===t.id);
  return `<section class="card"><button class="back" data-back="vocab">‹ Alle Themen</button><h2>${esc(t.name)}</h2><p class="lvl">${its.length} Wörter und Wendungen</p>
  <ul class="ex">${its.map(i=>{const b=st(i.id)?.box||0;return `<li><button class="say" data-say="${esc(i.fr)}" aria-label="Vorlesen">🔊</button><span><b>${esc(i.fr)}</b><small>${esc(i.de)}${i.note?' · <em>'+esc(i.note)+'</em>':''}</small></span><i class="dot b${Math.min(b,4)}" title="Stufe ${b}"></i></li>`}).join('')}</ul>
- <div class="actions"><button class="big" data-start="theme:${t.id}">Dieses Thema üben</button></div></section>`}
+ <div class="actions"><button class="big" data-start="theme:${t.id}">Dieses Thema üben</button></div></section>${(CLIPS[t.id]||[]).length?`<section class="card"><h3>Passende Clips</h3>${CLIPS[t.id].map(c=>clipHTML(c,t.id)).join('')}</section>`:''}`}
 function settingsHTML(){return `<section class="card"><h3>Sprechtempo</h3><p class="note">So schnell liest die Stimme vor.</p>
  <div class="seg">${[[0.8,'Langsam'],[0.95,'Normal'],[1.1,'Schnell']].map(([v,l])=>`<button data-rate="${v}" class="${Math.abs((S.rate||.95)-v)<.01?'on':''}">${l}</button>`).join('')}</div>
  <button class="plain" id="testVoice" style="margin-top:10px">Probe hören</button></section>
@@ -967,10 +1072,40 @@ function doneHTML(){const n=R.done,ok=R.ok,min=Math.max(1,Math.round((Date.now()
  const w=[...new Map(R.wrong.filter(t=>t.item).map(t=>[t.item.id,t.item])).values()];
  return `<section class="card hero"><h2>${ok/n>=.8?'Super Runde!':ok/n>=.5?'Gut gemacht!':'Dranbleiben lohnt sich!'}</h2><p>${ok} von ${n} richtig · ${min} ${min===1?'Minute':'Minuten'}</p>
  ${w.length?`<h3>Das kommt bald wieder</h3><ul class="ex">${w.map(i=>`<li><button class="say" data-say="${esc(i.type==='v'?i.fr:fillGap(i))}">🔊</button><span><b>${esc(i.type==='v'?i.fr:fillGap(i))}</b><small>${esc(i.type==='v'?i.de:i.why||'')}</small></span></li>`).join('')}</ul>`:''}
- <div class="actions"><button class="big" id="again">Noch eine Runde</button><button class="plain" id="home">Fertig für heute</button></div><p class="note">${saveNote()}</p></section>`}
+ ${suggestHTML()}<div class="actions"><button class="big" id="again">Noch eine Runde</button><button class="plain" id="home">Fertig für heute</button></div><p class="note">${saveNote()}</p></section>`}
+
+
+// ---- Hören & Sehen
+let playing=null,noting=null,noteMsg='';
+const SRCN=k=>SOURCES[k]?.name||'';
+const allClips=()=>[...Object.entries(CLIPS).flatMap(([t,cs])=>cs.map(c=>({c,t}))),...EXTRA.map(c=>({c,t:null}))];
+function clipHTML(c,theme,ctx='l'){const [id,src,title,dur,lvl,hint]=c,seen=S.clips?.[id],pk=id+'@'+ctx;
+ return `<div class="clip" id="clip-${pk}">${playing===pk?`<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&hl=fr&cc_lang_pref=fr&cc_load_policy=1" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`:`<button class="thumb" data-play="${pk}" aria-label="Abspielen: ${esc(title)}"><img src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" loading="lazy" alt=""><span>▶</span><em>${dur}</em></button>`}
+ <div class="cmeta"><b>${esc(title)}</b><small>${esc(SRCN(src))} · ${dur} · ${lvl}${seen?' · <span class="seen">✓ gesehen</span>':''}</small>${hint?`<p class="hint">🎧 ${esc(hint)}</p>`:''}
+ ${noting===id?`<div class="note-form"><input id="nfFr" placeholder="Wendung auf Französisch" autocomplete="off"><input id="nfDe" placeholder="Bedeutung auf Deutsch" autocomplete="off"><div class="actions"><button class="plain" id="nfSave" data-src="${esc(title)}">In die Karteibox</button><button class="ghost inline" id="nfCancel">Abbrechen</button></div></div>`:''}
+ ${noteMsg&&noting===null&&noteMsg.startsWith(id+'|')?`<p class="fb ok small">${esc(noteMsg.slice(id.length+1))}</p>`:''}
+ <div class="cact">${seen?'':`<button class="plain" data-watched="${id}">✓ Gesehen</button>`}${noting===id?'':`<button class="plain" data-note="${id}">+ Wendung notieren</button>`}<a class="plain" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">YouTube ↗</a></div></div></div>`}
+function listenHTML(){const sug=suggestList(3);
+ return `<section class="card"><h3>Hören & Sehen</h3><p class="note">Echte Alltagssprache zu deinen Themen. So holst du am meisten heraus:</p>
+ <ol class="how"><li>Lies den Hörauftrag 🎧 und schau den Clip einmal ganz, mit französischen Untertiteln.</li><li>Fällt dir eine Wendung auf? Tippe auf «+ Wendung notieren». Sie kommt dann in deinen Runden wieder.</li><li>Sprich ein, zwei Sätze laut nach – Pause drücken hilft.</li></ol></section>
+ ${sug.length?`<section class="card"><h3>Für dich ausgewählt</h3><p class="note">Passend zu den Themen, die du gerade übst.</p>${sug.map(({c,t})=>clipHTML(c,t,'s')).join('')}</section>`:''}
+ <section class="card"><h3>Jeden Tag ein paar Minuten</h3>${AUDIO.map(a=>`<a class="res" href="${a.url}" target="_blank" rel="noopener"><b>${esc(a.name)} ↗</b><small>${esc(a.de)}</small></a>`).join('')}</section>
+ ${AREAS.map(a=>`<section class="card"><h3>${AREA_ICON[a.id]} ${esc(a.name)}</h3>${THEMES.filter(t=>t.area===a.id&&CLIPS[t.id]).map(t=>`<details ${sub==='lt:'+t.id?'open':''} data-lt="${t.id}"><summary><b>${esc(t.name)}</b> <small>${CLIPS[t.id].length} Clips · ${CLIPS[t.id].filter(c=>S.clips?.[c[0]]).length} gesehen</small></summary>${CLIPS[t.id].map(c=>clipHTML(c,t.id)).join('')}</details>`).join('')}</section>`).join('')}
+ <section class="card"><h3>🇫🇷 Kultur zwischendurch</h3>${EXTRA.map(c=>clipHTML(c,null)).join('')}</section>
+ <section class="card"><h3>Über die Quellen</h3>${Object.values(SOURCES).map(x=>`<p class="note"><b>${esc(x.name)}:</b> ${esc(x.de)}</p>`).join('')}<p class="note">Die Clips laufen über YouTube. Ob ein bestimmter Ausdruck vorkommt, ist nicht garantiert – der Hörauftrag ist eine Anregung.</p></section>`}
+function recentThemes(){const ts=new Set();if(R)R.tasks.forEach(t=>t.item&&t.item.type==='v'&&ts.add(t.item.theme));
+ if(!ts.size)Object.keys(S.items).filter(k=>k.startsWith('v:')).sort((a,b)=>(S.items[b].next||0)-(S.items[a].next||0)).slice(0,30).forEach(k=>ts.add(k.split(':')[1]));return[...ts]}
+function suggestList(n){const ts=recentThemes(),out=[];for(const t of ts)for(const c of CLIPS[t]||[])if(!S.clips?.[c[0]]&&out.length<n&&!out.some(o=>o.c[0]===c[0]))out.push({c,t});
+ if(out.length<n){for(const t of ORDER.map(x=>x.id))for(const c of CLIPS[t]||[])if(!S.clips?.[c[0]]&&out.length<n&&!out.some(o=>o.c[0]===c[0]))out.push({c,t})}return out}
+function suggestHTML(){const s=suggestList(1)[0];if(!s)return'';return `<h3>Jetzt anwenden</h3><p class="note">Ein Clip zu dem, was du gerade geübt hast:</p>${clipHTML(s.c,s.t,'d')}`}
+function ownHTML(){const its=VOC.filter(i=>i.theme==='own');
+ return `<section class="card"><h3>✍️ Meine Wendungen</h3><p class="note">Was du in Clips, Gesprächen oder Zeitungen aufschnappst. Es kommt in deinen Runden wieder.</p>
+ ${its.length?`<ul class="ex">${its.map(i=>`<li><button class="say" data-say="${esc(i.fr)}" aria-label="Vorlesen">🔊</button><span><b>${esc(i.fr)}</b><small>${esc(i.de)} · <em>${esc(i.note)}</em></small></span><button class="del" data-del="${i.id.slice(2)}" aria-label="Löschen">✕</button></li>`).join('')}</ul>`:''}
+ <div class="note-form"><input id="owFr" placeholder="Wendung auf Französisch" autocomplete="off"><input id="owDe" placeholder="Bedeutung auf Deutsch" autocomplete="off"><div class="actions"><button class="plain" id="owSave">Hinzufügen</button>${its.length?`<button class="plain" data-start="area:own">Nur meine Wendungen üben</button>`:''}</div></div>${noteMsg&&noteMsg.startsWith('own|')?`<p class="fb ok small">${esc(noteMsg.slice(4))}</p>`:''}</section>`}
+function addOwn(fr,de,src){fr=fr.trim();de=de.trim();if(!fr||!de)return false;const k=Date.now().toString(36)+Math.random().toString(36).slice(2,5);S.own=S.own||{};S.own[k]={fr,de,src:src||'',t:Date.now()};save();return true}
 
 // ---- Ereignisse
-function bind(){app.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;sub=null;bkMsg='';render();scrollTo(0,0)});
+function bind(){app.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;sub=null;bkMsg='';playing=null;noting=null;noteMsg='';render();scrollTo(0,0)});
  app.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{sub='unit:'+b.dataset.unit;render();scrollTo(0,0)});
  app.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{sub='theme:'+b.dataset.theme;render();scrollTo(0,0)});
  app.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{sub=null;render()});
@@ -993,6 +1128,15 @@ function bind(){app.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=
  on('bkLoad',()=>{try{const d=JSON.parse(decodeURIComponent(escape(atob($('#bkText').value.replace(/\s+/g,'')))));if(!d||!d.items)throw 0;S=merge(S,d);save();bkCode='';bkMsg='Die Sicherung ist wiederhergestellt: '+Object.keys(S.items).length+' geübte Einträge.'}catch(e){bkMsg='Dieser Code ist ungültig. Kopiere ihn vollständig und versuche es noch einmal.'}render()});
  on('resetAsk',()=>{sub='reset';render()});on('resetNo',()=>{sub=null;render()});on('resetYes',()=>{const r=S.rate;S=blank();S.rate=r;S.updatedAt=Date.now();save();sub=null;view='home';render()});
  on('ghOn',()=>{const v=$('#ghTok').value;if(v.trim())ghConnect(v)});on('ghOff',ghOff);
+
+ app.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>{playing=b.dataset.play;noting=null;try{speechSynthesis.cancel()}catch(e){}render();document.getElementById('clip-'+playing)?.scrollIntoView({block:'center'})});
+ app.querySelectorAll('[data-watched]').forEach(b=>b.onclick=()=>{S.clips=S.clips||{};S.clips[b.dataset.watched]=today();save();render()});
+ app.querySelectorAll('[data-note]').forEach(b=>b.onclick=()=>{noting=b.dataset.note;noteMsg='';render();setTimeout(()=>$('#nfFr')?.focus(),50)});
+ app.querySelectorAll('details[data-lt]').forEach(d=>d.ontoggle=()=>{if(d.open)sub='lt:'+d.dataset.lt});
+ on('nfCancel',()=>{noting=null;render()});
+ on('nfSave',()=>{const id=noting;if(addOwn($('#nfFr').value,$('#nfDe').value,$('#nfSave').dataset.src)){noting=null;noteMsg=id+'|Gespeichert. Die Wendung kommt in deinen nächsten Runden.';S.clips=S.clips||{};if(!S.clips[id]){S.clips[id]=today();save()}render()}});
+ on('owSave',()=>{if(addOwn($('#owFr').value,$('#owDe').value,'')){noteMsg='own|Gespeichert. Die Wendung kommt in deinen nächsten Runden.';render()}});
+ app.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{const k=b.dataset.del;if(S.own[k]){S.own[k]={...S.own[k],del:1,t:Date.now()};delete S.items['o:'+k];save();render()}});
  on('pinAsk',()=>{pinMode=true;pinMsg='';render()});on('pinSave',()=>pinSet($('#pinNew').value));on('pinGo',()=>pinConnect($('#pinIn').value));}
 function doCheck(){const t=cur(),v=$('#inp').value;if(!v.trim())return;const r=check(v,t.accept||[t.answer]);answer(r.ok,{input:v,acc:r.acc,close:r.close})}
 document.addEventListener('keydown',e=>{if(view==='round'&&R&&R.state==='fb'&&e.key==='Enter'&&document.activeElement?.id!=='inp'){e.preventDefault();next()}});
@@ -1057,7 +1201,7 @@ function ghHTML(){const pm=pinMsg?`<p class="fb ${/gespeichert/.test(pinMsg)?'ok
 loadLocal();if(!localOK())store='none';
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 if('serviceWorker' in navigator)try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
-(async()=>{render();await ghInit();if(view!=='round')render()})();
+(async()=>{render();await ghInit();rebuild();if(view!=='round')render()})();
 </script>
 </body>
 </html>
